@@ -1,0 +1,125 @@
+<html>
+	<head>
+		<title>Nikhil CG - Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<div id="header">
+
+				<div class="top">
+
+					<!-- Logo -->
+						<div id="logo">
+							<span class="image avatar48"><img src="images/crop.jpg" alt="" /></span>
+							<h1 id="title">Nikhil CG</h1>
+							<p>Robotics Engineer</p>
+						</div>
+
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li><a href="https://nikhilcg26.github.io/index.html#top" id="top-link"><span class="icon solid fa-home">Intro</span></a></li>
+								<li><a href="https://nikhilcg26.github.io/index.html#about" id="about-link"><span class="icon solid fa-user">About Me</span></a></li>
+								<li><a href="https://nikhilcg26.github.io/index.html#education" id="education-link"><span class="icon solid fa-graduation-cap">Education</span></a></li>
+								<li><a href="https://nikhilcg26.github.io/index.html#projects" id="projects-link"><span class="icon solid fa-th">Projects</span></a></li>
+								<li><a href="https://nikhilcg26.github.io/index.html#work" id="work-link"><span class="icon solid fa-briefcase">Work Experience</span></a></li>
+								<li><a href="https://nikhilcg26.github.io/index.html#contact" id="contact-link"><span class="icon solid fa-envelope">Contact</span></a></li>
+							</ul>
+						</nav>
+
+				</div>
+
+				<div class="bottom">
+
+					<!-- Social Icons -->
+						<ul class="icons">
+							<li><a href="https://www.linkedin.com/in/nikhilcg/" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+							<li><a href="https://github.com/NikhilCG26" class="icon brands fa-github"><span class="label">Github</span></a></li>
+							<li><a href="mailto:nchinnal@andrew.cmu.edu" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+						</ul>
+
+				</div>
+
+			</div>
+            
+        <!--Main-->    
+        <div id="main">
+
+            <!--Construction Site-->
+
+            <section id="construction" class="three">
+                <div class="container">
+
+                    <header>
+                        <h2><span style="color:rgb(0, 0, 0)">Construction Site Hazard Detection using Computer Vision</span></h2>
+                    </header>
+
+                    <div class="col-4 col-12-mobile">
+                        <div class="inner">
+                            <article class="item">
+                                <div class="row">
+                                    <div class="col-6 col-12-mobile">
+                                        <h3><span class="vid fit"><video width="500" height="400" controls><source src="images/boundingbox.mp4" type="video/mp4"></video></span></h3>
+                                    </div>
+                                    <div class="col-6 col-12-mobile">
+                                        <h3><span class="vid fit"><video width="500" height="400" controls><source src="images/birdeye.mp4" type="video/mp4"></video></span></h3>
+                                    </div>
+                            </div>
+                            </article>
+                            <br>
+                        </div>
+                        <u1 class = 'inside'>
+                            <span style="text-align: left;">
+                            <span style="color:rgb(0, 0, 0)">
+                            This project is made to create a Hazard Detection in a Construction Site based on the location of the worker in the site.
+
+                            The location of the worker is obtained by a camera feed on the site. The video feed is sent through a YoloV7 object detection program to identify the 
+                            coordinates of the workers every frame. The network uses Transfer Learning on COCO dataset to improve the accuracy of the detection. 
+
+                            The coordinates are 2 Dimensional and they are then feed a global coordinate calculator program that uses transformation matrices to convert the 2D coordinates into 3D.
+
+                            The new coordinates are cross referenced with the coordinates of the safe regions and the danger zones to identify the workers in the danger zone and raise a warning.
+                        </u1>
+                    </div>
+
+                </div>
+            </section>
+
+             <!--Buggy-->
+
+             <section id="buggy" class="three">
+                <div class="container">
+
+                    <header>
+                        <h2><span style="color:rgb(0, 0, 0)">Path planning and control strategies for an autonomous buggy</span></h2>
+                    </header>
+                    <div class="col-4 col-12-mobile">
+                        <div class="inner">
+                            <article class="item">
+                                <div class="row">
+                                    <div class="col-6 col-12-mobile">
+                                        <h3><span class="vid fit"><video width="400" height="300" controls><source src="images/birdeye.mp4" type="video/mp4"></video></span></h3>
+                                    <div class="col-6 col-12-mobile">
+                                        <h3><span class="image center"><img src="images/webots.png" width="200" height="300" /> </span></h3>
+                                    </div>
+                            </div>
+                            </article>
+                            <br>
+                        </div>
+                        <u1 class = 'inside'>
+                            <span style="text-align: left;">
+                            <span style="color:rgb(0, 0, 0)">
+                            <li>Programmed a worker detection network using YoloV7 and Transfer Learning on the COCO dataset to run on CCTV footage.</li>
+                            <li>Computed the 3D global coordinates of the worker from the 2D coordinates using transformation matrices. </li>
+                            <li>Generated a real-time Birdseye view mapping of the workers and danger zone.</li>
+                        </u1>
+                    </div>
+                    
+
+                </div>
+            </section>
+        </div>    
