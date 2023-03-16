@@ -4,6 +4,9 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+        <style>
+            h5{text-align: left;}
+        </style>
 	</head>
 	<body class="is-preload">
 
@@ -72,18 +75,25 @@
                             </article>
                             <br>
                         </div>
-                        <u1 class = 'inside'>
-                            <span style="text-align: left;">
-                            <span style="color:rgb(0, 0, 0)">
-                            This project is made to create a Hazard Detection in a Construction Site based on the location of the worker in the site.
-
-                            The location of the worker is obtained by a camera feed on the site. The video feed is sent through a YoloV7 object detection program to identify the 
-                            coordinates of the workers every frame. The network uses Transfer Learning on COCO dataset to improve the accuracy of the detection. 
-
-                            The coordinates are 2 Dimensional and they are then feed a global coordinate calculator program that uses transformation matrices to convert the 2D coordinates into 3D.
-
-                            The new coordinates are cross referenced with the coordinates of the safe regions and the danger zones to identify the workers in the danger zone and raise a warning.
-                        </u1>
+                        <div class = 'inside'>
+                            <p>
+                                <h5>
+                                    <span style="color:rgb(0, 0, 0)">
+                                    This project is made to create a Hazard Detection in a Construction Site based on the location of the worker in the site.
+                                    <br/>
+                                    <br/>
+                                    The location of the worker is obtained by a camera feed on the site. The video feed is sent through a YoloV7 object detection program to identify the 
+                                    coordinates of the workers every frame. The network uses Transfer Learning on COCO dataset to improve the accuracy of the detection. 
+                                    <br/>
+                                    <br/>
+                                    The coordinates are 2 Dimensional and they are then feed a global coordinate calculator program that uses transformation matrices to convert the 2D coordinates into 3D.
+                                    <br/>
+                                    <br/>
+                                    The new coordinates are cross referenced with the coordinates of the safe regions and the danger zones to identify the workers in the danger zone and raise a warning.
+                                    </span>
+                                </h5>
+                            </p>
+                        </div>
                     </div>
 
                 </div>
@@ -102,7 +112,7 @@
                             <article class="item">
                                 <div class="row">
                                     <div class="col-6 col-12-mobile">
-                                        <h3><span class="image center"><img src="images/bicycle model.png" width="200" height="300" /> </span></h3>
+                                        <h3><span class="image center"><img src="images/bicycle_model.png" width="200" height="300" /> </span></h3>
                                     </div>
                                     <div class="col-6 col-12-mobile">
                                         <h3><span class="image center"><img src="images/webots.png" width="200" height="300" /> </span></h3>
@@ -112,11 +122,35 @@
                             <br>
                         </div>
                         <u1 class = 'inside'>
-                            <span style="text-align: left;">
-                            <span style="color:rgb(0, 0, 0)">
-                            <li>Programmed a worker detection network using YoloV7 and Transfer Learning on the COCO dataset to run on CCTV footage.</li>
-                            <li>Computed the 3D global coordinates of the worker from the 2D coordinates using transformation matrices. </li>
-                            <li>Generated a real-time Birdseye view mapping of the workers and danger zone.</li>
+                            <h5>
+                                <span style="color:rgb(0, 0, 0)">
+                                    I created a simulation of an autonomous buggy going around the track (CMU's Buggy Track) in the most opimal path possible, with the use of a lateral and longitudinal controller.
+                                    <br/>
+                                    <br/>
+                                    The simulation was done on Webots with the help of a tractor to indicate the buggy that is moving.
+                                    <br/>
+                                    <br/>
+                                    The controller was designed based on the bicycle model for the study of vehicle dynamics. 
+                                    <br/>
+                                    <br/>
+                                    The longitudinal controller is based GPS coordinates of the track and the 
+                                    acceleration is calculated based on the closest node. 
+                                    <br/>
+                                    The lateral controller on the other hand went through 5 different iterations: 
+                                    <ol type="1">
+                                        <li>PID Controller</li>
+                                        <li>State Feedback Controller</li>
+                                        <li>LQR Controller</li>
+                                        <li>MPC Controller</li>
+                                        <li>EKF SLAM</li>
+                                    </ol>
+                                    
+                                  
+                                    With the use of these controllers the simulation was able to complete the track in less than 120 seconds and with less than 3 meters of deviation for the optimal path 
+                                    of the track.
+                                    <h3><span class="image center"><img src="images/MPC.png" width="300" height="400" /> </span></h3>
+                                </span>
+                            </h5>
                         </u1>
                     </div>
                     
