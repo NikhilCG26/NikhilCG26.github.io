@@ -84,17 +84,39 @@
                             <p>
                                 <h5>
                                     <span style="color:rgb(0, 0, 0)">
-                                    This project is made to create a Hazard Detection in a Construction Site based on the location of the worker in the site.
+                                        The number of fatal injuries on active construction sites has risen by nearly 90 percent in the last three years and our company 
+                                        is not immune. The four most common workplace hazards are falls, electrocutions, struck by and caught by accidents that constitute 
+                                        over 60 percent of such injuries. This project provides a solution that aims to improve worker awareness and company profits by 
+                                        reliably notifying workers of their proximity to potential hazards and active machinery. For our project we would like to develop 
+                                        a system that combines image processing and point-cloud based computer vision methods in order to track the movement of workers 
+                                        around the construction site and warn them of entering potentially dangerous regions. We would target the most common construction 
+                                        site hazards, namely: workers falling and being struck by objects. With this technology, our company will be able to easily identify 
+                                        the hazardous areas on our construction sites and prevent some of the most fatal accidents that we see every year.
                                     <br/>
                                     <br/>
-                                    The location of the worker is obtained by a camera feed on the site. The video feed is sent through a YoloV7 object detection program to identify the 
-                                    coordinates of the workers every frame. The network uses Transfer Learning on COCO dataset to improve the accuracy of the detection. 
+                                        For the design of the project, Our method is composed of 5 main steps. The first is to preprocess our worksite by selecting four fixed 
+                                        points in the cameras field of view. This allows us account for the unique perspective of our camera and generate the respective 
+                                        transformation matrix. Next, we read our video stream, and divide it into individual frames that You only look once (YOLO) can process. 
+                                        Applying YOLO allows us to identify workers in each image, and using the outputted bounding box, we can map worker positions using our 
+                                        previously defined transformation. Finally, we generate a map of worker positions for each frame and stitch that back together to form 
+                                        an output video.  
                                     <br/>
                                     <br/>
-                                    The coordinates are 2 Dimensional and they are then feed a global coordinate calculator program that uses transformation matrices to convert the 2D coordinates into 3D.
+                                        Given a video stream of our worksite, we need a way to map worker positions in the image, to worker positions in space. To do this we 
+                                        rely on the fact that the camera’s position on the construction site is fixed and given 4 known positions we can generate a transformation 
+                                        that maps pixel values to world coordinate values. This works because we assume all of the workers are on the same plane, implying that 
+                                        their height is the same all times. So as you can see above, x, y are world coordinates and u and v are pixel coordinates. 
                                     <br/>
                                     <br/>
-                                    The new coordinates are cross referenced with the coordinates of the safe regions and the danger zones to identify the workers in the danger zone and raise a warning.
+                                        After that we run YOLO on each of our frames, were given the pixels value for the center of the bounding box, and its dimensions. By 
+                                        averaging the bottom of our bounding box, we can find a pixel representation of each worker’s position in each frame. We transform those 
+                                        pixel values into world coordinates, using the matrix we found earlier. To generate our output video, we scale our world coordinate 
+                                        positions by the size our output frame and boundary. We then stitch together each frame to create an animation. With our predefined 
+                                        areas, we can accurately classify workers in danger areas.
+                                    <br/>
+                                    <br/>
+                                        The project was able to successfully	track the location of the workers and plot their location on the bird-eyes view. We were able 
+                                        to track multiple bodies simultaneously and track their locations accurately. This was achieved with the use of just one camera.
                                     </span>
                                 </h5>
                             </p>
