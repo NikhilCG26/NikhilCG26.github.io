@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nikhil Chinnalapatti Gopinath | Robotics & AI Engineer</title>
+    <title>Nikhil CG Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Mono:wght@400;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -129,6 +129,7 @@
             display: flex;
             gap: 2rem;
             list-style: none;
+            align-items: center;
         }
         
         nav .nav-links a {
@@ -140,7 +141,7 @@
             position: relative;
         }
         
-        nav .nav-links a::after {
+        nav .nav-links a:not(.resume-btn)::after {
             content: '';
             position: absolute;
             bottom: -5px;
@@ -151,12 +152,30 @@
             transition: width 0.3s ease;
         }
         
-        nav .nav-links a:hover {
+        nav .nav-links a:not(.resume-btn):hover {
             color: var(--accent-cyan);
         }
         
-        nav .nav-links a:hover::after {
+        nav .nav-links a:not(.resume-btn):hover::after {
             width: 100%;
+        }
+        
+        .resume-btn {
+            padding: 0.6rem 1.5rem;
+            background: transparent;
+            color: var(--accent-cyan);
+            border: 2px solid var(--accent-cyan);
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .resume-btn:hover {
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+            box-shadow: 0 0 20px var(--glow);
         }
         
         /* Mobile menu */
@@ -198,6 +217,18 @@
         
         .hero-content {
             max-width: 900px;
+        }
+        
+        .hero-image {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 4px solid var(--accent-cyan);
+            box-shadow: 0 0 30px var(--glow);
+            margin: 0 auto 2rem;
+            object-fit: cover;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards 0.1s;
         }
         
         .hero-label {
@@ -426,6 +457,39 @@
             font-size: 1.2rem;
         }
         
+        /* Project Filters */
+        .project-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+        
+        .filter-btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            padding: 0.6rem 1.2rem;
+            background: rgba(0, 245, 255, 0.05);
+            color: var(--text-secondary);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover {
+            background: rgba(0, 245, 255, 0.1);
+            color: var(--accent-cyan);
+            border-color: var(--accent-cyan);
+        }
+        
+        .filter-btn.active {
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+            border-color: var(--accent-cyan);
+        }
+        
         /* Projects Grid */
         .projects-grid {
             display: grid;
@@ -442,6 +506,10 @@
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
+        }
+        
+        .project-card.hidden {
+            display: none;
         }
         
         .project-card::before {
@@ -464,6 +532,13 @@
             transform: translateY(-10px);
             border-color: var(--accent-cyan);
             box-shadow: 0 10px 30px rgba(0, 245, 255, 0.15);
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.1) 0%, rgba(0, 102, 255, 0.1) 100%);
         }
         
         .project-icon {
@@ -529,6 +604,191 @@
         
         .project-link:hover {
             gap: 1rem;
+        }
+        
+        /* Project Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 14, 23, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            border-radius: 16px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+        
+        .modal-header {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        .modal-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(10, 14, 23, 0.8);
+            border: 2px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            padding: 2.5rem;
+        }
+        
+        .modal-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .modal-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .modal-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+        
+        .modal-description {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .modal-section {
+            margin-bottom: 2rem;
+        }
+        
+        .modal-section h3 {
+            font-size: 1.4rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .modal-section h3::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: var(--accent-cyan);
+        }
+        
+        .modal-section ul {
+            list-style: none;
+            padding-left: 1.5rem;
+        }
+        
+        .modal-section li {
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .modal-section li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent-cyan);
+        }
+        
+        .modal-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .modal-gallery img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 245, 255, 0.2);
+        }
+        
+        .modal-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .modal-link-btn {
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            color: var(--accent-cyan);
+            border: 2px solid var(--accent-cyan);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .modal-link-btn:hover {
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
         }
         
         /* Skills Section */
@@ -772,6 +1032,18 @@
             section {
                 padding: 5rem 0;
             }
+            
+            .modal-content {
+                width: 95%;
+            }
+            
+            .modal-body {
+                padding: 1.5rem;
+            }
+            
+            .modal-title {
+                font-size: 1.5rem;
+            }
         }
         
         /* Animations */
@@ -784,6 +1056,24 @@
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-cyan);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-blue);
         }
     </style>
 </head>
@@ -809,10 +1099,34 @@
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#achievements">Achievements</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <!-- <li><a href="resume/Resume - Nikhil CG.pdf" target="_blank" class="resume-btn">Resume</a></li> -->
+                <li><a href="resume/Resume - Nikhil CG.pdf" target="_blank">Resume</a></li>
             </ul>
             <button class="mobile-menu-btn">☰</button>
         </div>
     </nav>
+    
+    <!-- Project Modal -->
+    <div class="modal-overlay" id="projectModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img id="modalImage" src="" alt="Project Image">
+                <button class="modal-close" onclick="closeModal()"></button>
+            </div>
+            <div class="modal-body">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <div class="modal-meta">
+                    <div class="modal-tech" id="modalTech"></div>
+                </div>
+                <div class="modal-description" id="modalDescription"></div>
+                <div class="modal-section" id="modalKeyFeatures"></div>
+                <div class="modal-section" id="modalTechnicalDetails"></div>
+                <div class="modal-section" id="modalResults"></div>
+                <div class="modal-section" id="modalGallery"></div>
+                <div class="modal-links" id="modalLinks"></div>
+            </div>
+        </div>
+    </div>
     
     <!-- Main Content -->
     <main>
@@ -820,6 +1134,9 @@
         <section id="hero">
             <div class="container">
                 <div class="hero-content">
+                    <!-- Replace with your profile image -->
+                    <img src="images/Nikhil Headshot.jpg" alt="Nikhil Chinnalapatti Gopinath" class="hero-image">
+                    
                     <div class="hero-label">Robotics & AI Engineer</div>
                     <h1>Nikhil Chinnalapatti Gopinath</h1>
                     <p class="hero-subtitle">Building the future of autonomous systems, one robot at a time</p>
@@ -829,7 +1146,7 @@
                     </p>
                     <div class="hero-cta">
                         <a href="#contact" class="btn btn-primary">Get in Touch</a>
-                        <a href="#experience" class="btn btn-secondary">View Work</a>
+                        <a href="#experience" class="btn btn-primary">View Work</a>
                     </div>
                 </div>
             </div>
@@ -858,11 +1175,17 @@
                                 <div class="timeline-date">Jan 2024 – Present</div>
                             </div>
                             <ul class="timeline-achievements">
-                                <li>Spearheaded technical development of an industry-leading vision/perception system for case segmentation using GroundingDino & SAM2. Established the entire pipeline for post-processing, collision detection, and robot path planning. Achieved 98% accuracy and reduced inference latency from 19s → 4s</li>
+                                <!-- <li>Spearheaded technical development of an industry-leading vision/perception system for case segmentation using GroundingDino & SAM2. Established the entire pipeline for post-processing, collision detection, and robot path planning. Achieved 98% accuracy and reduced inference latency from 19s → 4s</li>
                                 <li>Developed custom datasets, enabling model fine-tuning for accuracy gains and real-time performance, and a ROS2-based integration platform connecting vision, AMR control, PLC, and Fanuc robotic systems</li>
                                 <li>Led technical development of the industry-first robotic automated trailer swing door opening solution, projected to deliver $15.1M in savings, through robotic programming, state of the art vision system, and a custom End-of-Arm Tool (EOAT)</li>
                                 <li>Designed a custom AMR platform with synchronous control of dual industrial arm for latch and handle manipulation based on direction from vision system</li>
-                                <li>Supported the creation of an internally designed robotic automated trailer unload system, with potential savings of $1.9B, by evolving the system from prototype to proof-of-concept (PoC). Achieved 85% case entitlement at 850 cases/hour peak throughput</li>
+                                <li>Supported the creation of an internally designed robotic automated trailer unload system, with potential savings of $1.9B, by evolving the system from prototype to proof-of-concept (PoC). Achieved 85% case entitlement at 850 cases/hour peak throughput</li> -->
+
+                                <li>Led development of advanced robotic vision and automation systems delivering 98% perception accuracy and 5× performance improvement, enabling real-time autonomous warehouse operations</li>
+                                <li>Architected end-to-end robotics platforms integrating vision AI, AMRs, industrial robots, and controls systems to enable scalable deployment</li>
+                                <li>Delivered an industry-first robotic trailer door automation solution projected to generate $15M+ operational savings</li>
+                                <li>robotics automation programs from prototype to production-scale concepts, contributing to solutions with up to $1.9B long-term savings potential</li>
+
                             </ul>
                         </div>
                     </div>
@@ -884,6 +1207,25 @@
                             </ul>
                         </div>
                     </div>
+
+                    <div class="timeline-item fade-in">
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <div>
+                                    <div class="timeline-company">Airbus India</div>
+                                    <div class="timeline-role">Intern - Industrial Systemt</div>
+                                    <div class="timeline-location">Bangalore, India</div>
+                                </div>
+                                <div class="timeline-date">Mar 2022 – Jul 2023</div>
+                            </div>
+                            <ul class="timeline-achievements">
+                                <li>Designed, and simulated the process flow of a Final Assembly Line (FAL) of A320 in India to manufacture 50 aircraft in a month using Anylogic and Flexsim; Achieved a 20% increase in production compared to existing plant layouts.</li>
+                                <li>Created industrial robot program for autonomous defect identification and pickup of components in the Assembly line. Simulated the system on ROS.</li>
+                                <li>Built a Digital Twin of the FAL using Unity3D; Simulated the motion of a user-controllable avatar, created custom animations and process flow of the FAL of A320, increasing productivity by 20% using ROS.</li>
+                                <li>Developed the UI/UX for the Digital Twin to be used on a Computer, and Mobile Device, as a visual interface for Discrete Event Simulation and training tool for engineers.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -899,20 +1241,38 @@
                     </p>
                 </div>
                 
-                <div class="projects-grid">
-                    <div class="project-card fade-in">
+                <!-- Project Filters -->
+                <div class="project-filters">
+                    <button class="filter-btn active" data-filter="all">All Projects</button>
+                    <button class="filter-btn" data-filter="Robotics">Robotics</button>
+                    <button class="filter-btn" data-filter="Computer Vision">Computer Vision</button>
+                    <button class="filter-btn" data-filter="Deep Learning">Deep Learning</button>
+                    <button class="filter-btn" data-filter="Controls">Controls</button>
+                    <button class="filter-btn" data-filter="NLP">NLP</button>
+                    <button class="filter-btn" data-filter="Simulation">Simulation</button>
+                    <button class="filter-btn" data-filter="Mechanical">Mechanical</button>
+                </div>
+                
+                <div class="projects-grid" id="projectsGrid">
+                    <!-- Project 1: Visual Word Sense Disambiguation -->
+                    <div class="project-card fade-in" data-tags="MetaClip,Computer Vision,PyTorch,NLP" data-project="vwsd">
+                        <!-- Replace with your project image -->
+                        <!-- <img src="images/vwsd-project.jpg" alt="Visual Word Sense Disambiguation" class="project-image"> -->
                         <div class="project-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <!-- <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="3" y="3" width="7" height="7"></rect>
                                 <rect x="14" y="3" width="7" height="7"></rect>
                                 <rect x="14" y="14" width="7" height="7"></rect>
                                 <rect x="3" y="14" width="7" height="7"></rect>
-                            </svg>
+                            </svg> -->
+                            <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.29289 1.29289C9.48043 1.10536 9.73478 1 10 1H18C19.6569 1 21 2.34315 21 4V8C21 8.55228 20.5523 9 20 9C19.4477 9 19 8.55228 19 8V4C19 3.44772 18.5523 3 18 3H11V8C11 8.55228 10.5523 9 10 9H5V20C5 20.5523 5.44772 21 6 21H10C10.5523 21 11 21.4477 11 22C11 22.5523 10.5523 23 10 23H6C4.34315 23 3 21.6569 3 20V8C3 7.73478 3.10536 7.48043 3.29289 7.29289L9.29289 1.29289ZM6.41421 7H9V4.41421L6.41421 7ZM20.1716 18.7574C20.6951 17.967 21 17.0191 21 16C21 13.2386 18.7614 11 16 11C13.2386 11 11 13.2386 11 16C11 18.7614 13.2386 21 16 21C17.0191 21 17.967 20.6951 18.7574 20.1716L21.2929 22.7071C21.6834 23.0976 22.3166 23.0976 22.7071 22.7071C23.0976 22.3166 23.0976 21.6834 22.7071 21.2929L20.1716 18.7574ZM13 16C13 14.3431 14.3431 13 16 13C17.6569 13 19 14.3431 19 16C19 17.6569 17.6569 19 16 19C14.3431 19 13 17.6569 13 16Z"/>
+                                </svg>
                         </div>
                         <div class="project-content">
                             <h3 class="project-title">Visual-Word Sense Disambiguation</h3>
                             <p class="project-description">
-                                Created state-of-the-art Visual Word Sense Disambiguation using MetaClip model evaluated against Weighted Average Loss. Achieved Hit Rate of 0.7235 and Mean Reciprocal Rank (MRR) of 0.8280.
+                                Created state-of-the-art Visual Word Sense Disambiguation using MetaClip model. Achieved Hit Rate of 0.7235 and MRR of 0.8280.
                             </p>
                             <div class="project-tech">
                                 <span class="tech-tag">MetaClip</span>
@@ -920,13 +1280,12 @@
                                 <span class="tech-tag">PyTorch</span>
                                 <span class="tech-tag">NLP</span>
                             </div>
-                            <a href="https://github.com/NikhilCG26" class="project-link">
-                                View Project →
-                            </a>
                         </div>
                     </div>
                     
-                    <div class="project-card fade-in">
+                    <!-- Project 2: ASR -->
+                    <div class="project-card fade-in" data-tags="Deep Learning,TTS,ASR,PyTorch" data-project="asr">
+                        <!-- <img src="images/asr-project.jpg" alt="Speech Recognition" class="project-image"> -->
                         <div class="project-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
@@ -935,9 +1294,9 @@
                             </svg>
                         </div>
                         <div class="project-content">
-                            <h3 class="project-title">Automatic Speech Recognition using Synthetic Speech</h3>
+                            <h3 class="project-title">Automatic Speech Recognition</h3>
                             <p class="project-description">
-                                Generated 300 hours of Synthetic data using Variational Inference with adversarial learning Text-to-Speech models. Achieved a Levenshtein Distance of 23.38 and Loss of 0.14.
+                                Generated 300 hours of synthetic data using Variational Inference. Achieved Levenshtein Distance of 23.38 and Loss of 0.14.
                             </p>
                             <div class="project-tech">
                                 <span class="tech-tag">Deep Learning</span>
@@ -945,27 +1304,69 @@
                                 <span class="tech-tag">ASR</span>
                                 <span class="tech-tag">PyTorch</span>
                             </div>
-                            <a href="https://github.com/NikhilCG26" class="project-link">
-                                View Project →
-                            </a>
                         </div>
                     </div>
                     
-                    <div class="project-card fade-in">
+                    <!-- Project 3: Deep Learning Portfolio -->
+                    <div class="project-card fade-in" data-tags="Deep Learning,CNN,LSTM,Attention,PyTorch" data-project="dl-portfolio">
+                        <!-- <img src="images/dl-portfolio.jpg" alt="Deep Learning Projects" class="project-image"> -->
                         <div class="project-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                                <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
-                                <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
-                                <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
-                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                            <svg fill="none" viewBox="0 0 32 32" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path id="machine--learning--03_1_" d="M29.36,15.695v-3.389c0.575-0.159,1-0.681,1-1.305c0-0.75-0.61-1.36-1.36-1.36
+                                    c-0.191,0-0.372,0.04-0.537,0.111l-2.365-2.956C26.261,6.572,26.36,6.298,26.36,6c0-0.75-0.61-1.36-1.36-1.36
+                                    c-0.401,0-0.758,0.177-1.007,0.454l-3.659-1.83C20.351,3.179,20.36,3.091,20.36,3c0-0.75-0.61-1.36-1.36-1.36
+                                    c-0.625,0-1.147,0.425-1.306,1h-4.389c-0.159-0.575-0.681-1-1.305-1c-0.75,0-1.36,0.61-1.36,1.36c0,0.091,0.01,0.179,0.027,0.264
+                                    l-2.66,1.33C7.758,4.318,7.401,4.14,7,4.14c-0.75,0-1.36,0.61-1.36,1.36c0,0.273,0.082,0.526,0.221,0.739L3.598,8.785
+                                    C3.417,8.695,3.216,8.64,3,8.64c-0.75,0-1.36,0.61-1.36,1.36c0,0.625,0.425,1.146,1,1.305v3.389c-0.575,0.159-1,0.681-1,1.305
+                                    c0,0.75,0.61,1.36,1.36,1.36c0.546,0,1.014-0.325,1.231-0.791l3.424,0.571C7.726,17.824,8.298,18.36,9,18.36
+                                    c0.091,0,0.179-0.01,0.264-0.027l0.83,1.659C9.818,20.242,9.64,20.599,9.64,21c0,0.75,0.61,1.36,1.36,1.36
+                                    c0.47,0,0.885-0.24,1.13-0.604l3.518,1.173C15.646,22.953,15.64,22.976,15.64,23c0,0.625,0.425,1.147,1,1.306v3.388
+                                    c-0.575,0.159-1,0.681-1,1.306c0,0.75,0.61,1.36,1.36,1.36s1.36-0.61,1.36-1.36c0-0.624-0.425-1.147-1-1.306v-3.389
+                                    c0.575-0.159,1-0.681,1-1.306c0-0.452-0.224-0.85-0.564-1.098l0.682-1.82l3.163,0.904c0,0.005-0.001,0.01-0.001,0.015
+                                    c0,0.624,0.425,1.147,1,1.306v5.389c-0.575,0.159-1,0.681-1,1.306c0,0.75,0.61,1.36,1.36,1.36s1.36-0.61,1.36-1.36
+                                    c0-0.624-0.425-1.147-1-1.306v-5.389c0.575-0.159,1-0.681,1-1.306c0-0.149-0.03-0.29-0.074-0.424l3.828-2.553
+                                    C28.353,18.231,28.66,18.36,29,18.36c0.75,0,1.36-0.61,1.36-1.36C30.36,16.376,29.935,15.854,29.36,15.695z M21.354,14.932
+                                    c-0.002-0.045-0.007-0.09-0.014-0.134l3.049-1.355l3.313,2.899L21.354,14.932z M20,15.64c-0.353,0-0.64-0.287-0.64-0.64
+                                    s0.287-0.64,0.64-0.64s0.64,0.287,0.64,0.64S20.353,15.64,20,15.64z M20,13.64c-0.75,0-1.36,0.61-1.36,1.36
+                                    c0,0.452,0.224,0.85,0.564,1.097l-1.166,3.11l-1.902-0.543l-1.465-5.126l5.463-3.756l0.628,0.489l3.028,2.65l-2.745,1.22
+                                    C20.796,13.838,20.423,13.64,20,13.64z M9.131,15.653L8.122,9.85l3.612-0.361V9.485C11.93,9.995,12.421,10.36,13,10.36
+                                    c0.005,0,0.009-0.001,0.014-0.001l0.823,2.879l-3.966,2.726C9.666,15.792,9.412,15.681,9.131,15.653z M13,9.64
+                                    c-0.353,0-0.64-0.287-0.64-0.64S12.647,8.36,13,8.36S13.64,8.647,13.64,9S13.353,9.64,13,9.64z M10.28,16.557l3.765-2.589
+                                    l1.275,4.463l-4.962-1.418c0-0.005,0.001-0.009,0.001-0.014C10.36,16.844,10.328,16.697,10.28,16.557z M24.129,7.036
+                                    C24.366,7.235,24.667,7.36,25,7.36c0.191,0,0.372-0.04,0.537-0.111l2.365,2.955C27.739,10.428,27.64,10.702,27.64,11
+                                    c0,0.069,0.01,0.135,0.02,0.201l-3.144,1.397l-3.295-2.883l-0.464-0.361L24.129,7.036z M28.251,15.866l-3.138-2.745l2.841-1.262
+                                    c0.176,0.213,0.412,0.371,0.686,0.446v3.389C28.501,15.733,28.369,15.789,28.251,15.866z M29.64,11c0,0.353-0.287,0.64-0.64,0.64
+                                    s-0.64-0.287-0.64-0.64s0.287-0.64,0.64-0.64S29.64,10.647,29.64,11z M25,5.36c0.353,0,0.64,0.287,0.64,0.64S25.353,6.64,25,6.64
+                                    S24.36,6.353,24.36,6S24.647,5.36,25,5.36z M19,2.36c0.353,0,0.64,0.287,0.64,0.64S19.353,3.64,19,3.64S18.36,3.353,18.36,3
+                                    S18.647,2.36,19,2.36z M19,4.36c0.401,0,0.758-0.177,1.007-0.454l3.659,1.83C23.649,5.821,23.64,5.909,23.64,6
+                                    c0,0.156,0.032,0.303,0.08,0.443l-3.56,2.448l-6.904-5.37c0.021-0.051,0.035-0.106,0.05-0.161h4.389
+                                    C17.853,3.935,18.375,4.36,19,4.36z M12,2.36c0.353,0,0.64,0.287,0.64,0.64S12.353,3.64,12,3.64S11.36,3.353,11.36,3
+                                    S11.647,2.36,12,2.36z M10.993,3.906C11.242,4.182,11.599,4.36,12,4.36c0.304,0,0.583-0.104,0.81-0.274l6.728,5.232l-5.075,3.489
+                                    l-0.757-2.65C14.096,9.918,14.36,9.491,14.36,9c0-0.75-0.61-1.36-1.36-1.36c-0.673,0-1.229,0.492-1.337,1.135V8.772L7.998,9.138
+                                    l-0.42-2.412C8.039,6.508,8.36,6.042,8.36,5.5c0-0.091-0.01-0.179-0.027-0.264L10.993,3.906z M4.265,9.511
+                                    C4.231,9.423,4.19,9.339,4.139,9.261l2.263-2.546c0.143,0.071,0.3,0.115,0.467,0.132L7.28,9.21L4.265,9.511z M7,4.86
+                                    c0.353,0,0.64,0.287,0.64,0.64S7.353,6.14,7,6.14S6.36,5.853,6.36,5.5S6.647,4.86,7,4.86z M2.36,10c0-0.353,0.287-0.64,0.64-0.64
+                                    S3.64,9.647,3.64,10S3.353,10.64,3,10.64S2.36,10.353,2.36,10z M3,16.64c-0.353,0-0.64-0.287-0.64-0.64S2.647,15.36,3,15.36
+                                    S3.64,15.647,3.64,16C3.64,16.353,3.353,16.64,3,16.64z M7.769,16.43l-3.424-0.571c-0.059-0.561-0.455-1.018-0.986-1.165v-3.389
+                                    c0.503-0.139,0.888-0.556,0.977-1.077l3.067-0.307l1.018,5.853C8.135,15.91,7.904,16.142,7.769,16.43z M8.36,17
+                                    c0-0.353,0.287-0.64,0.64-0.64S9.64,16.647,9.64,17S9.353,17.64,9,17.64S8.36,17.353,8.36,17z M11,21.64
+                                    c-0.353,0-0.64-0.287-0.64-0.64s0.287-0.64,0.64-0.64s0.64,0.287,0.64,0.64S11.353,21.64,11,21.64z M12.353,21.071
+                                    c0.001-0.024,0.007-0.047,0.007-0.071c0-0.75-0.61-1.36-1.36-1.36c-0.091,0-0.179,0.01-0.264,0.027l-0.83-1.659
+                                    c0.098-0.088,0.182-0.189,0.251-0.302l5.396,1.541l0.742,2.596c-0.168,0.103-0.315,0.238-0.425,0.402L12.353,21.071z M17.64,29
+                                    c0,0.353-0.287,0.64-0.64,0.64c-0.353,0-0.64-0.287-0.64-0.64s0.287-0.64,0.64-0.64C17.353,28.36,17.64,28.647,17.64,29z M17,23.64
+                                    c-0.353,0-0.64-0.287-0.64-0.64s0.287-0.64,0.64-0.64c0.353,0,0.64,0.287,0.64,0.64S17.353,23.64,17,23.64z M17.121,21.652
+                                    C17.08,21.648,17.041,21.64,17,21.64c-0.005,0-0.009,0.001-0.014,0.001l-0.618-2.162l1.416,0.404L17.121,21.652z M18.732,19.406
+                                    l1.147-3.059c0.041,0.004,0.08,0.012,0.121,0.012c0.519,0,0.967-0.296,1.196-0.725l6.451,1.433c0.006,0.124,0.03,0.243,0.068,0.356
+                                    l-3.828,2.553C23.647,19.769,23.34,19.64,23,19.64c-0.491,0-0.918,0.264-1.158,0.655L18.732,19.406z M23.64,29
+                                    c0,0.353-0.287,0.64-0.64,0.64s-0.64-0.287-0.64-0.64s0.287-0.64,0.64-0.64S23.64,28.647,23.64,29z M23,21.64
+                                    c-0.353,0-0.64-0.287-0.64-0.64s0.287-0.64,0.64-0.64s0.64,0.287,0.64,0.64S23.353,21.64,23,21.64z M29,17.64
+                                    c-0.353,0-0.64-0.287-0.64-0.64c0-0.353,0.287-0.64,0.64-0.64s0.64,0.287,0.64,0.64C29.64,17.353,29.353,17.64,29,17.64z"/>
                             </svg>
                         </div>
                         <div class="project-content">
                             <h3 class="project-title">Deep Learning Portfolio</h3>
                             <p class="project-description">
-                                Comprehensive deep learning projects: Phoneme recognition (89.2%), Face Classification (89.9%), Face Verification (64.3%), ASR using LSTMs/RNNs/CTCs (LD: 3.98), and Attention-based TTS (LD: 9.99).
+                                Comprehensive deep learning projects: Phoneme recognition (89.2%), Face Classification (89.9%), ASR (LD: 3.98), and TTS (LD: 9.99).
                             </p>
                             <div class="project-tech">
                                 <span class="tech-tag">Deep Learning</span>
@@ -973,25 +1374,34 @@
                                 <span class="tech-tag">LSTM</span>
                                 <span class="tech-tag">Attention</span>
                             </div>
-                            <a href="https://github.com/NikhilCG26" class="project-link">
-                                View Project →
-                            </a>
                         </div>
                     </div>
                     
-                    <div class="project-card fade-in">
+                    <!-- Project 4: Construction Hazard Detection -->
+                    <div class="project-card fade-in" data-tags="YoloV7,Computer Vision,Object Detection,Safety" data-project="construction">
+                        <!-- <img src="images/construction.png" alt="Construction Hazard Detection" class="project-image"> -->
                         <div class="project-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
-                                <rect x="9" y="11" width="6" height="8" rx="1"></rect>
-                                <path d="M12 2v4"></path>
-                                <path d="M12 18v.01"></path>
+                            <svg fill="none" 
+	                            viewBox="0 0 256 220" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M133.202,84.142c5.795,0,10.493,4.698,10.493,10.493s-4.698,10.493-10.493,10.493s-10.493-4.698-10.493-10.493
+                                        S127.406,84.142,133.202,84.142z M94.71,147.731l-0.097-0.097l0,0c-0.435-0.29-0.822-0.532-1.161-0.919l1.161,13.298L80.01,180.71
+                                        c-2.079,2.998-1.354,7.06,1.547,9.139c2.998,2.079,7.06,1.354,9.139-1.547l15.764-22.727c0.822-1.161,1.354-2.708,1.161-4.255
+                                        l-0.532-6.431L94.71,147.731z M138.086,191.01h62.573l-11.702-36.509c0,0-6.625,1.644-19.729,15.571
+                                        c-0.29,0.29-0.629,0.629-0.919,0.919l-31.625-18.279c0.532-1.015,0.629-2.176,0.435-3.433L125.9,107.692
+                                        c-0.919-4.062-4.545-7.157-8.801-7.157H96.161c-1.547,0-3.095,0.822-3.965,2.176l-10.445,18.134
+                                        c-1.354,2.176-0.532,4.981,1.644,6.238l11.702,6.722l-1.547,2.611c-1.886,3.095-0.822,7.06,2.369,8.801l26.257,15.135v23.985
+                                        c0,3.627,2.901,6.528,6.528,6.528c3.627,0,6.528-2.901,6.528-6.528v-27.37l29.062,16.828c-5.996,3.433-12.863,4.062-17.747,6.963
+                                        C140.552,184.336,138.086,191.01,138.086,191.01z M97.321,129.984l-7.689-4.449l0,0l9.139-15.764h10.252L97.321,129.984z
+                                        M114.198,139.752l7.253-12.669l5.416,19.923L114.198,139.752z M241.583,217.906H14.417c-4.457,0-8.594-2.406-10.797-6.28
+                                        s-2.157-8.66,0.122-12.49L117.325,8.166c2.261-3.802,6.252-6.072,10.675-6.072c4.423,0,8.414,2.27,10.675,6.072l113.583,190.97
+                                        c2.278,3.83,2.325,8.616,0.122,12.49C250.177,215.499,246.04,217.906,241.583,217.906z M15.876,206.353L15.876,206.353
+                                        c0.001-0.001,0.001-0.002,0.002-0.003L15.876,206.353z M17.402,203.787h221.196L128,17.837L17.402,203.787z"/>
                             </svg>
                         </div>
                         <div class="project-content">
                             <h3 class="project-title">Construction Site Hazard Detection</h3>
                             <p class="project-description">
-                                Programmed a worker detection model using YoloV7 and Transfer Learning, with computation of 3D global coordinates using transformation matrices. Achieved mAP0.5 of 92% with 90% precision and 93% recall.
+                                Worker detection model using YoloV7 with 3D coordinate computation. Achieved mAP0.5 of 92% with 90% precision and 93% recall.
                             </p>
                             <div class="project-tech">
                                 <span class="tech-tag">YoloV7</span>
@@ -999,11 +1409,312 @@
                                 <span class="tech-tag">Object Detection</span>
                                 <span class="tech-tag">Safety</span>
                             </div>
-                            <a href="https://github.com/NikhilCG26" class="project-link">
-                                View Project →
-                            </a>
                         </div>
                     </div>
+                    
+                    <!-- Project 5: Quadruped Research -->
+                    <div class="project-card fade-in" data-tags="ROS,Robotics,Controls,PyBullet,MPC,Simulation,Mechanical" data-project="quadruped">
+                        <!-- <img src="images/quadruped-research.jpg" alt="Quadruped Robot" class="project-image"> -->
+                        <div class="project-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 70 70" enable-background="new 0 0 64 64" xml:space="preserve"><g><g>
+                                <path d="M63.364,12.154C62.792,11.421,61.93,11,61,11H36.78l-0.325-1.302C36.078,8.186,34.56,7,33,7h-4    c-1.56,0-3.078,1.186-3.455,2.698L25.22,11H12c-0.801,0-1.555,0.313-2.121,0.879l-4,4C5.313,16.445,5,17.199,5,18v4    
+                                c0,0.948,0.444,1.8,1.146,2.35l-5.185,6.048c-0.693,0.81-1.031,1.843-0.949,2.909s0.573,2.036,1.384,2.73    c0.486,0.416,1.065,0.694,1.679,0.841c0.614,3.846,5.189,6.757,10.021,9.826c1.323,0.841,2.668,1.694,3.944,2.577    
+                                c0.017,0.057,0.038,0.111,0.065,0.166c0.46,0.919-0.811,2.839-1.813,3.847c-0.303,0.305-0.379,0.77-0.187,1.153    C15.157,54.552,16.412,57,19,57c2.206,0,4-1.794,4-4v-1c0-0.266-0.105-0.52-0.293-0.707c-2.337-2.337-5.49-4.34-8.539-6.277    
+                                c-4.306-2.735-8.381-5.332-9.059-8.192c0.739-0.215,1.415-0.623,1.927-1.221L16.125,25h24.464l-4.627,5.397    c-0.693,0.81-1.031,1.843-0.949,2.909s0.573,2.036,1.384,2.73c0.486,0.416,1.065,0.694,1.679,0.841    
+                                c0.614,3.846,5.189,6.757,10.021,9.826c1.323,0.841,2.668,1.694,3.944,2.577c0.017,0.057,0.038,0.111,0.065,0.166    c0.46,0.919-0.811,2.839-1.813,3.847c-0.303,0.305-0.379,0.77-0.187,1.153C50.157,54.552,51.412,57,54,57c2.206,0,4-1.794,4-4v-1    
+                                c0-0.266-0.105-0.52-0.293-0.707c-2.337-2.337-5.49-4.34-8.539-6.277c-4.306-2.735-8.381-5.332-9.059-8.192    c0.739-0.215,1.415-0.623,1.927-1.221L51.125,25H59c1.379,0,2.576-0.935,2.91-2.272l2-8    
+                                C64.136,13.826,63.938,12.888,63.364,12.154z M19.097,50.786c0.68,0.531,1.319,1.075,1.903,1.635V53c0,1.103-0.897,2-2,2    c-0.791,0-1.379-0.499-1.729-0.911C17.883,53.363,18.789,52.115,19.097,50.786z M54.097,50.786    
+                                c0.68,0.531,1.319,1.075,1.903,1.635V53c0,1.103-0.897,2-2,2c-0.791,0-1.379-0.499-1.729-0.911    C52.883,53.363,53.789,52.115,54.097,50.786z M27.484,10.183C27.64,9.563,28.361,9,29,9h4c0.639,0,1.36,0.563,1.516,1.183    
+                                L34.72,11H27.28L27.484,10.183z M7,22v-3h3.732L7.46,22.818C7.186,22.64,7,22.344,7,22z M5.519,34.301    c-0.691,0.807-2.012,0.911-2.821,0.217c-0.404-0.346-0.649-0.83-0.69-1.364c-0.041-0.533,0.128-1.05,0.474-1.455l12.002-14    
+                                C14.862,17.255,15.416,17,16.001,17c0.477,0,0.939,0.171,1.302,0.482c0.404,0.347,0.65,0.831,0.691,1.364    c0.041,0.532-0.128,1.049-0.475,1.455L5.519,34.301z M17.84,23l1.198-1.397c0.627-0.733,0.944-1.648,0.944-2.603H24v1    
+                                c0,0.553,0.447,1,1,1h12c0.553,0,1-0.447,1-1v-1h7.732l-3.429,4H17.84z M32,17v2h-2v-2H32z M36,17v2h-2v-2H36z M28,19h-2v-2h2V19z     M40.519,34.301c-0.69,0.807-2.012,0.911-2.821,0.217c-0.404-0.346-0.649-0.83-0.69-1.364c-0.041-0.533,0.128-1.05,0.474-1.455    
+                                l12.002-14C49.862,17.255,50.416,17,51.001,17c0.477,0,0.939,0.171,1.302,0.482c0.404,0.347,0.65,0.831,0.691,1.364    c0.041,0.532-0.128,1.049-0.475,1.455L40.519,34.301z M61.971,14.243l-2,7.999C59.858,22.688,59.46,23,59,23h-6.16l1.198-1.397    
+                                c0.694-0.813,1.032-1.846,0.95-2.91c-0.082-1.065-0.574-2.034-1.384-2.729C52.88,15.342,51.955,15,51.001,15    c-1.17,0-2.277,0.51-3.037,1.397L47.447,17H38v-1c0-0.553-0.447-1-1-1H25c-0.553,0-1,0.447-1,1v1h-4.552    
+                                c-0.223-0.384-0.497-0.739-0.844-1.036C17.88,15.342,16.955,15,16.001,15c-1.17,0-2.277,0.51-3.037,1.397L12.447,17H7.586    
+                                l3.707-3.707C11.479,13.106,11.737,13,12,13h49c0.31,0,0.597,0.141,0.788,0.385C61.979,13.63,62.046,13.942,61.971,14.243z"/></g></g></svg>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Quadruped with Spine Optimization</h3>
+                            <p class="project-description">
+                                Computational design optimization using PyBullet with hierarchical Model Predictive Control for quadruped locomotion.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">ROS</span>
+                                <span class="tech-tag">Robotics</span>
+                                <span class="tech-tag">Controls</span>
+                                <span class="tech-tag">PyBullet</span>
+                                <span class="tech-tag">MPC</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 6: Mars Rover -->
+                    <div class="project-card fade-in" data-tags="Robotics,Embedded Systems,Mechanical Design,Leadership,Mechanical" data-project="mars-rover">
+                        <!-- <img src="images/Rover.png" alt="Mars Rover" class="project-image"> -->
+                        <div class="project-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m29.695 12.5c-2.5703 0-4.6953 2.1133-4.6953 4.6836v6.2578c0 2.5703 2.125 4.6836 4.6953 4.6836h4.6797v21.875h-7.8125v-15.633c-0.003906-0.85938-0.70703-1.5586-1.5703-1.5547h-6.9688l-2.6602-3.9883c-0.28906-0.4375-0.77734-0.70312-1.3047-0.70703h-6.2539c-0.41406 0.003906-0.80859 0.16797-1.1016 0.46484-0.29297 0.29297-0.45312 0.69141-0.45312 1.1055 0.003906 0.85938 0.69922 1.5547 1.5547 1.5547h5.4219l2.0742 3.125-2.0742 3.125h-5.4219c-0.41406 0.003906-0.80859 0.16797-1.1016 0.46484-0.29297 0.29297-0.45312 0.69141-0.45312 1.1055 0.003906 0.85938 0.69922 1.5547 1.5547 1.5547h6.2539c0.52344 0.003906 1.0117-0.25781 1.3047-0.69141l2.6562-3.9883h5.4141v14.062h-9.375c-0.85938 0.003906-1.5547 0.69922-1.5547 1.5586v12.5c-0.003906 0.86328 0.69531 1.5625 1.5547 1.5664h9.2812l-3.2695 4.25c-1.3242-0.71484-2.8359-1.125-4.4414-1.125-5.1602 0-9.3828 4.207-9.3828 9.3672 0 5.1602 4.2188 9.3828 9.3828 9.3828 5.1602 0 9.3672-4.2188 9.3672-9.3828 0-2.4336-0.93359-4.6562-2.4648-6.3242l4.75-6.1719h9.1328l6.2109 6.7305c-1.25 1.5898-2 3.5938-2 5.7656 0 5.1602 4.2188 9.3828 9.375 9.3828s9.375-4.2188 9.375-9.3828c0-2.1367-0.72266-4.1055-1.9336-5.6836l6.2852-6.8086h9.1328l4.6875 6.0898c-1.5781 1.6758-2.5469 3.9297-2.5469 6.4023 0 5.1602 4.2188 9.3828 9.375 9.3828s9.375-4.2188 9.375-9.3828c0-5.1602-4.2188-9.3672-9.375-9.3672-1.5664 0-3.043 0.38672-4.3438 1.0703l-3.2305-4.1953h9.1445c0.86328-0.003906 1.5586-0.70312 1.5586-1.5664v-12.5c-0.003906-0.85938-0.69922-1.5547-1.5586-1.5586h-4.6875v-4.6797c0-0.41797-0.16406-0.81641-0.45703-1.1094-0.29297-0.29297-0.6875-0.46094-1.1055-0.46094h-3.1328l0.003906-29.695c-0.003906-0.41406-0.16797-0.80859-0.46484-1.1016-0.29297-0.29297-0.69141-0.45703-1.1094-0.45312-0.85547 0.003906-1.5508 0.69922-1.5547 1.5547v29.695h-3.125c-0.86328 0.003906-1.5586 0.70703-1.5547 1.5703v4.6797h-25.008v-21.875h4.6797c2.5703 0 4.6953-2.1133 4.6953-4.6836v-6.2578c0-2.5703-2.125-4.6836-4.6953-4.6836zm0 3.1289h18.738c0.89062 0 1.5703 0.66406 1.5703 1.5547v6.2578c0 0.89453-0.67578 1.5547-1.5703 1.5547h-18.738c-0.89062 0-1.5703-0.66406-1.5703-1.5547v-6.2578c0-0.89453 0.67578-1.5547 1.5703-1.5547zm9.3672 1.5586c-1.7266 0-3.125 1.3984-3.125 3.125s1.3984 3.125 3.125 3.125c0.82812 0 1.625-0.32812 2.2109-0.91406 0.58594-0.58594 0.91406-1.3828 0.91406-2.2109s-0.32812-1.625-0.91406-2.2109c-0.58594-0.58594-1.3828-0.91406-2.2109-0.91406zm-1.5625 10.938h3.125v21.875h-3.125zm34.371 18.75h6.2578v3.125h-6.2578zm-56.242 6.25h68.75v9.375h-9.9805l-4.3398-5.6406c-0.27734-0.36328-0.70703-0.58984-1.1641-0.61328-0.46094-0.019532-0.90625 0.16016-1.2227 0.5l-5.3125 5.7539h-24.574l-5.3125-5.7539c-0.3125-0.33984-0.76172-0.51953-1.2227-0.49609s-0.88672 0.24609-1.1641 0.60938l-4.3398 5.6406h-10.117zm15.805 7.1055 2.0977 2.2695h-3.8438zm37.277 0 1.7461 2.2695h-3.8438zm-28.039 5.3945h18.805l-4.3164 4.6797c-1.4805-0.98047-3.2539-1.5547-5.1562-1.5547-1.8633 0-3.6016 0.55078-5.0625 1.4961zm-25.039 6.2422c0.89453 0 1.7422 0.18359 2.5078 0.51953 0.12109 0.054687 0.24219 0.10938 0.35938 0.17188 0.003906 0.003906 0.007812 0.003906 0.011719 0.007812 0.054687 0.027344 0.10938 0.054688 0.16016 0.085938 0.027344 0.015625 0.058594 0.03125 0.085937 0.050781 0.085938 0.050781 0.17188 0.10156 0.25781 0.15625 0.003906 0.003906 0.007813 0.003906 0.007813 0.007813 0.16406 0.10547 0.32031 0.21484 0.47266 0.33594 0.011718 0.011719 0.027344 0.023437 0.039062 0.035156 0.34375 0.27734 0.66016 0.58594 0.94141 0.92578 0.87891 1.0781 1.4062 2.4531 1.4062 3.9648 0 3.4727-2.7812 6.2539-6.2539 6.2539s-6.2539-2.7812-6.2539-6.2539 2.7812-6.2539 6.2539-6.2539zm34.367 0c1.0938 0 2.1172 0.27734 3.0078 0.76172l0.003907 0.003906c0.058593 0.03125 0.11328 0.0625 0.17188 0.09375 0.011718 0.007813 0.019531 0.011719 0.03125 0.019532 0.046875 0.027344 0.089844 0.058594 0.13672 0.085937 0.007813 0.003907 0.015626 0.011719 0.023438 0.015625 0.10156 0.066406 0.20312 0.13672 0.30078 0.20703 0.023438 0.015624 0.046875 0.03125 0.070313 0.050781 0.011718 0.011719 0.027344 0.019531 0.039062 0.03125 0.054688 0.039062 0.10547 0.082031 0.15625 0.125 0.26953 0.21875 0.51953 0.46094 0.75 0.71875 0.011719 0.015625 0.023438 0.027343 0.035156 0.042969 0.03125 0.035156 0.0625 0.070312 0.089844 0.10547 0 0.003906 0.003906 0.003906 0.007813 0.007813 0.039062 0.046875 0.082031 0.10156 0.11719 0.14844 0.011719 0.011719 0.019532 0.027344 0.03125 0.039063 0.070313 0.089843 0.13672 0.18359 0.20312 0.28125 0.003907 0.003906 0.007813 0.007812 0.007813 0.011719 0.035156 0.050781 0.066406 0.10156 0.097656 0.15234 0.60938 0.96875 0.96484 2.1133 0.96484 3.3516 0 3.4727-2.7812 6.2539-6.25 6.2539s-6.25-2.7812-6.25-6.2539c0-1.2734 0.375-2.4531 1.0234-3.4375 0.054688-0.085938 0.11328-0.16797 0.17578-0.25 0.019532-0.023438 0.035157-0.050782 0.050782-0.074219 0.09375-0.125 0.19141-0.24219 0.29297-0.35938 0.027344-0.03125 0.054688-0.066406 0.085938-0.097656 0.058594-0.0625 0.11719-0.125 0.17578-0.1875 0.027344-0.027344 0.058594-0.058594 0.089844-0.085938 0.003906-0.003906 0.011719-0.007812 0.019531-0.015625 0.042969-0.042969 0.089844-0.085937 0.13281-0.12891 0.050781-0.042969 0.097656-0.089844 0.14844-0.13281 0.023438-0.019531 0.046875-0.042968 0.074219-0.0625 0.019531-0.015624 0.042969-0.03125 0.0625-0.050781 0.11719-0.09375 0.23828-0.1875 0.36328-0.27344 0.042969-0.027344 0.085938-0.058594 0.12891-0.085938l0.003907-0.003906c0.058593-0.039062 0.11719-0.078125 0.17578-0.11328 0.019531-0.011719 0.035156-0.019531 0.054688-0.03125 0.050781-0.03125 0.097656-0.058594 0.14844-0.085938 0.035156-0.019531 0.070313-0.039062 0.10547-0.058593 0.007812-0.003907 0.019531-0.011719 0.027344-0.015626 0.86719-0.45312 1.8594-0.71094 2.9102-0.71094zm34.375 0c3.4688 0 6.25 2.7812 6.25 6.2539s-2.7812 6.2539-6.25 6.2539-6.25-2.7812-6.25-6.2539c0-1.4766 0.50781-2.8281 1.3516-3.8945 0.085938-0.10937 0.17188-0.21484 0.26563-0.31641 0.03125-0.03125 0.0625-0.066406 0.089843-0.097656 0.019531-0.023438 0.042969-0.042969 0.0625-0.0625 0.023438-0.023438 0.046875-0.050781 0.070313-0.074219 0.042968-0.042969 0.089844-0.085937 0.13281-0.12891 0.015625-0.011719 0.027344-0.027344 0.042969-0.039063 0.007813-0.007812 0.015625-0.015624 0.019531-0.019531 0.023438-0.019531 0.050782-0.039062 0.074219-0.0625 0.125-0.10938 0.25391-0.21875 0.38672-0.32031 0.042968-0.03125 0.085937-0.0625 0.13281-0.089844 0.11328-0.082031 0.22656-0.16016 0.34375-0.23047 0.023438-0.015625 0.050782-0.027344 0.074219-0.042968 0.042969-0.027344 0.089844-0.050782 0.13672-0.078126 0.039062-0.019531 0.078125-0.042968 0.11719-0.0625 0.074219-0.039062 0.15234-0.078124 0.23047-0.11719 0.09375-0.046875 0.1875-0.089844 0.28516-0.13281 0.007813-0.003906 0.015625-0.003906 0.023438-0.007812 0.73828-0.30469 1.5508-0.47266 2.4062-0.47266zm-68.75 3.1328c-1.7266 0-3.125 1.3984-3.125 3.125s1.3984 3.125 3.125 3.125c0.82812 0 1.625-0.32812 2.2109-0.91406 0.58594-0.58594 0.91406-1.3828 0.91406-2.2109 0-1.7266-1.3984-3.125-3.125-3.125zm34.375 0c-1.7266 0-3.125 1.3984-3.125 3.125s1.3984 3.125 3.125 3.125c0.82812 0 1.625-0.32812 2.2109-0.91406 0.58594-0.58594 0.91406-1.3828 0.91406-2.2109 0-1.7266-1.3984-3.125-3.125-3.125zm34.375 0c-1.7266 0-3.125 1.3984-3.125 3.125 0 0.82812 0.32812 1.625 0.91406 2.2109 0.58594 0.58594 1.3828 0.91406 2.2109 0.91406 1.7266 0 3.125-1.3984 3.125-3.125s-1.3984-3.125-3.125-3.125z"/>
+                               <!-- <text x="0.0" y="117.5" font-size="5.0" font-weight="bold" font-family="Arbeit Regular, Helvetica, Arial-Unicode, Arial, Sans-serif" fill="#000000">by Muhammad Naufal Subhiansyah</text><text x="0.0" y="122.5" font-size="5.0" font-weight="bold" font-family="Arbeit Regular, Helvetica, Arial-Unicode, Arial, Sans-serif" fill="#000000">from Noun Project</text> -->
+                            </svg>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Mars Rover - Astra Robotics</h3>
+                            <p class="project-description">
+                                Led mechanical subsystem development for Mars rover project, including chassis design, suspension, and robotic arm integration.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Robotics</span>
+                                <span class="tech-tag">Mechanical Design</span>
+                                <span class="tech-tag">SolidWorks</span>
+                                <span class="tech-tag">Leadership</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 7: Racing line optimization -->
+                    <div class="project-card fade-in" data-tags="Robotics,Controls,Simulation,MPC, Reinforcement Learning" data-project="racing">
+                        <!-- <img src="images/asr-project.jpg" alt="Speech Recognition" class="project-image"> -->
+                        <div class="project-icon">
+                            <svg viewBox="0 0 512 512" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+                            <style type="text/css">
+                                .st0{fill:#000000;}
+                            </style>
+                            <g>
+                                <path class="st0" d="M61.327,157.767h70.29c5.616,0,10.168-4.551,10.168-10.174v-34.392c0-5.616-4.551-10.174-10.168-10.174h-70.29
+                                    c-5.623,0-10.182,4.558-10.182,10.174v34.392C51.146,153.216,55.704,157.767,61.327,157.767z"/>
+                                <path class="st0" d="M131.618,354.233h-70.29c-5.623,0-10.182,4.558-10.182,10.174v34.392c0,5.623,4.559,10.174,10.182,10.174
+                                    h70.29c5.616,0,10.168-4.551,10.168-10.174v-34.392C141.785,358.791,137.234,354.233,131.618,354.233z"/>
+                                <path class="st0" d="M338.026,160.875h66.704c5.616,0,10.167-4.551,10.167-10.174v-27.203c0-5.623-4.551-10.188-10.167-10.188
+                                    h-66.704c-5.616,0-10.166,4.565-10.166,10.188v27.203C327.86,156.325,332.41,160.875,338.026,160.875z"/>
+                                <path class="st0" d="M404.73,351.125h-66.704c-5.616,0-10.166,4.558-10.166,10.174v27.218c0,5.608,4.551,10.174,10.166,10.174
+                                    h66.704c5.616,0,10.167-4.566,10.167-10.174v-27.218C414.897,355.683,410.346,351.125,404.73,351.125z"/>
+                                <path class="st0" d="M287.359,226.804c-27.645,0-34.754,13.072-34.754,29.196c0,16.123,7.109,29.196,34.754,29.196
+                                    c27.646,0,50.045-13.072,50.045-29.196C337.404,239.877,315.004,226.804,287.359,226.804z"/>
+                                <path class="st0" d="M512,256c0-5.42-1.899-10.486-5.095-14.42c-2.84-3.529-6.776-6.16-11.326-7.515v-83.74h-71.371v67.581
+                                    c-8.065-1.71-15.413-3.218-21.066-4.276c-20.174-3.746-63.095-11.377-81.03-14.55c-0.797-3.421-1.681-7.385-2.29-10.812
+                                    c-0.928-5.246-2.797-10.579-5.841-15.616l-0.014-0.022c-2.29-3.761-5.225-7.326-8.826-10.493
+                                    c-5.398-4.761-12.189-8.55-20.225-11.079l0.015,0.007c-8.044-2.558-17.312-3.884-27.964-3.884h-64.609
+                                    c-7.196,0-13.688,0.87-19.522,2.522c-5.102,1.449-9.666,3.522-13.667,5.985c-7.036,4.341-12.181,9.826-16.167,15.066l0.015-0.021
+                                    c-3.008,3.934-5.392,7.768-7.493,11.043c-1.587,2.493-3.029,4.725-4.326,6.493c-0.993,1.341-1.92,2.45-2.768,3.327l0.021-0.029
+                                    c-1.254,1.268-2.203,1.927-3.196,2.406c-1.058,0.456-1.978,0.732-4.036,0.76c-16.269,0-30.414,0-39.972,0v-30.058H0v182.655h12.805
+                                    h68.443v-30.058c9.551,0,23.696,0,39.949,0c2.145,0.029,3.073,0.319,4.124,0.797c0.891,0.421,1.761,1.029,2.898,2.13
+                                    c0.964,0.957,2.051,2.254,3.218,3.877l0.029,0.036c2.066,2.841,4.391,6.71,7.189,10.985l0.029,0.044
+                                    c2.138,3.217,4.594,6.71,7.616,10.152l-0.007-0.015c4.543,5.217,10.478,10.297,18.218,13.92c7.434,3.478,16.319,5.435,26.638,5.566
+                                    l0.218,0.058h0.993h64.609c9.472,0,17.834-1.043,25.232-3.073c5.544-1.514,10.53-3.58,14.928-6.13
+                                    c6.631-3.856,11.877-8.826,15.645-14.392c3.768-5.558,6.008-11.594,7.051-17.486c0.609-3.457,1.493-7.414,2.305-10.826
+                                    c17.935-3.175,60.841-10.798,81.001-14.544c5.667-1.058,13.022-2.565,21.08-4.282v67.602h71.371v-83.74
+                                    c4.528-1.362,8.492-3.986,11.348-7.551l-0.036,0.029C510.094,266.493,512,261.428,512,256z M442.398,168.513h34.993v68.842
+                                    c-5.848-1.333-12.971-2.964-20.587-4.674c-4.674-1.051-9.529-2.138-14.406-3.218V168.513z M63.067,202.151h-0.015v107.697h0.015
+                                    v19.29H18.189V182.861h44.878V202.151z M477.39,343.494h-34.993v-60.958c12.804-2.826,25.565-5.732,34.993-7.891V343.494z
+                                    M492.753,259.007c-0.674,0.834-1.609,1.435-2.718,1.682l-0.029,0.008l-0.044,0.007c0,0-0.63,0.145-1.804,0.42l-1.022,0.232
+                                    c-2.196,0.515-5.565,1.29-9.747,2.247c-7.963,1.833-18.891,4.319-30.334,6.87c-1.544,0.347-3.108,0.695-4.659,1.043
+                                    c-3.602,0.797-7.21,1.594-10.768,2.369c-3.601,0.79-7.167,1.558-10.588,2.29c-8.239,1.761-15.696,3.283-21.239,4.312
+                                    c-12.804,2.377-35.08,6.384-54.138,9.782c-9.522,1.696-18.261,3.239-24.594,4.377c-3.174,0.565-5.746,1.007-7.536,1.334
+                                    c-1.776,0.318-2.761,0.485-2.761,0.485l-3.377,0.601l-0.891,3.312c-0.008,0.022-0.747,2.79-1.688,6.689
+                                    c-0.95,3.891-2.08,8.898-2.899,13.507c-0.564,3.218-1.688,6.384-3.499,9.348c-1.348,2.217-3.08,4.34-5.298,6.297
+                                    c-3.326,2.92-7.761,5.515-13.688,7.384c-5.92,1.884-13.326,3.029-22.464,3.029h-64.609c-5.74,0-10.507-0.688-14.536-1.833
+                                    c-3.514-1.008-6.486-2.362-9.109-3.964c-4.566-2.826-8.087-6.479-11.247-10.602c-2.348-3.094-4.471-6.442-6.609-9.804
+                                    c-1.616-2.522-3.232-5.044-5.021-7.478c-1.348-1.826-2.769-3.594-4.385-5.232c-2.406-2.471-5.239-4.682-8.631-6.232
+                                    c-3.398-1.558-7.297-2.42-11.601-2.413H73.828v-86.145h47.392c4.449,0.007,8.456-0.906,11.92-2.565
+                                    c3.029-1.435,5.616-3.406,7.841-5.602c1.942-1.92,3.637-4.022,5.21-6.196c2.739-3.79,5.116-7.811,7.667-11.66
+                                    c1.913-2.884,3.891-5.666,6.116-8.202c3.348-3.797,7.166-7.037,12.239-9.414c5.08-2.369,11.479-3.913,20.146-3.92h64.609
+                                    c8.116,0,14.87,0.913,20.435,2.434c4.166,1.131,7.666,2.616,10.587,4.32c4.384,2.55,7.492,5.579,9.724,8.855
+                                    c2.225,3.29,3.566,6.841,4.203,10.449c0.82,4.609,1.95,9.624,2.899,13.508c0.942,3.898,1.681,6.667,1.688,6.696l0.891,3.304
+                                    l3.377,0.601c0,0,0.986,0.167,2.761,0.5c12.478,2.203,63.826,11.305,86.269,15.479c6.334,1.174,15.175,3,24.82,5.087
+                                    c2.29,0.492,4.644,1,7.007,1.514c3.558,0.783,7.166,1.572,10.768,2.369c9.108,2.03,18.094,4.058,25.768,5.805
+                                    c3.363,0.76,6.471,1.478,9.225,2.108c2.45,0.566,4.623,1.058,6.442,1.479c1.819,0.42,3.282,0.768,4.326,1.014l0.188,0.043
+                                    c1.051,0.24,1.615,0.363,1.615,0.363l0.044,0.014h0.029c1.109,0.246,2.044,0.848,2.718,1.682c0.674,0.833,1.058,1.876,1.072,3.007
+                                    C493.811,257.138,493.427,258.174,492.753,259.007z"/>
+                                <path class="st0" d="M506.891,241.558c0.007,0.006,0.007,0.014,0.014,0.022c0.007,0.007,0.007,0.007,0.015,0.015L506.891,241.558z"
+                                    />
+                            </g>
+                            </svg>
+                            <!-- <svg viewBox="0 0 512 512" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" width="1000px" height="1000px">
+                                <g>
+                                    <path d="M222.537,232.693h49.21l-0.469-12.424l-19.929-1.29c-0.423-0.062-0.782-0.359-0.938-0.782l-1.681-6.458
+                                        c-0.141-0.399-0.078-0.86,0.156-1.212c0.25-0.351,0.657-0.563,1.095-0.563h18.951c-1.407-13.127-9.78-22.853-22.962-24.839
+                                        c-18.741-2.815-33.228,10.602-30.93,26.708C215.978,218.386,219.261,228.714,222.537,232.693z M259.628,196.51l-5.293-0.344
+                                        c0,0-2.432-3.135-4.527-5.575C251.903,190.591,257.189,192.686,259.628,196.51z"/>
+                                    <path d="M65.417,237.509c-28.796,0-52.142,23.346-52.142,52.149c0,28.804,23.346,52.149,52.142,52.149
+                                        c28.804,0,52.149-23.346,52.149-52.149C117.566,260.856,94.221,237.509,65.417,237.509z M65.417,317.156
+                                        c-15.176,0-27.49-12.298-27.49-27.498c0-15.191,12.314-27.49,27.49-27.49c15.2,0,27.498,12.299,27.498,27.49
+                                        C92.915,304.858,80.617,317.156,65.417,317.156z"/>
+                                    <path d="M65.417,281.121c-4.707,0-8.522,3.831-8.522,8.538c0,4.715,3.815,8.538,8.522,8.538
+                                        c4.715,0,8.546-3.823,8.546-8.538C73.963,284.952,70.132,281.121,65.417,281.121z"/>
+                                    <path d="M393.738,229.965c-38.874-5.817-78.622-9.453-110.967-11.72c-2.291,10.148-9.75,19.264-19.186,19.264
+                                        c-11.376,0-51.203,0-51.203,0v-22.751v-44.566c-61.97,6.756-101.288,39.296-124.165,64.268
+                                        c21.658,8.976,36.942,30.336,36.942,55.198c0,5.583-0.79,10.977-2.228,16.122h214.946c-1.439-5.145-2.228-10.539-2.228-16.122
+                                        C335.647,257.275,361.557,230.84,393.738,229.965z"/>
+                                    <path d="M65.417,229.926c1.9,0,3.768,0.102,5.614,0.266l10.508-14.496v-33.173H0v83.439l8.741,4.902
+                                        C16.646,247.111,39.061,229.926,65.417,229.926z"/>
+                                    <path d="M470.281,286.813v-9.476l18.021-9.476c0,0,3.331-11.04,3.331-18.624c-21.219-7.005-49.57-11.102-75.738-15.684
+                                        c22.862,8.397,39.217,30.375,39.217,56.105c0,5.583-0.79,10.977-2.236,16.122H512v-18.967H470.281z"/>
+                                    <path d="M395.38,237.509c-28.796,0-52.15,23.346-52.15,52.149c0,28.804,23.354,52.149,52.15,52.149
+                                        c28.804,0,52.149-23.346,52.149-52.149C447.529,260.856,424.184,237.509,395.38,237.509z M395.38,317.156
+                                        c-15.192,0-27.498-12.298-27.498-27.498c0-15.191,12.306-27.49,27.498-27.49c15.184,0,27.498,12.299,27.498,27.49
+                                        C422.878,304.858,410.564,317.156,395.38,317.156z"/>
+                                    <path d="M395.38,281.121c-4.715,0-8.538,3.831-8.538,8.538c0,4.715,3.823,8.538,8.538,8.538
+                                        c4.715,0,8.53-3.823,8.53-8.538C403.91,284.952,400.095,281.121,395.38,281.121z"/>
+                                </g>
+                            </svg> -->
+                            <!-- <svg viewBox="0 0 90 90" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" fill="none" width="200" height="200">
+                                <path d="m21.094 50c-1.7227 0-3.125 1.4023-3.125 3.125s1.4023 3.125 3.125 3.125 3.125-1.4023 3.125-3.125-1.4023-3.125-3.125-3.125zm0 4.6875c-0.85938 0-1.5625-0.70312-1.5625-1.5625 0-0.86328 0.70312-1.5625 1.5625-1.5625s1.5625 0.70312 1.5625 1.5625c0 0.86328-0.70312 1.5625-1.5625 1.5625z"/>
+                                <path d="m71.094 50c-1.7227 0-3.125 1.4023-3.125 3.125s1.4023 3.125 3.125 3.125 3.125-1.4023 3.125-3.125-1.4023-3.125-3.125-3.125zm0 4.6875c-0.85938 0-1.5625-0.70312-1.5625-1.5625 0-0.86328 0.70312-1.5625 1.5625-1.5625 0.86328 0 1.5625 0.70312 1.5625 1.5625 0 0.86328-0.70312 1.5625-1.5625 1.5625z"/>
+                                <path d="m89.617 53.352c-0.10156-0.10156-2.5859-2.5156-8.9531-3.3359-0.39453-0.14844-2.1211-0.77344-4.1289-1.3477-1.2891-1.5742-3.25-2.5781-5.4375-2.5781-1.6719 0-3.2031 0.58594-4.4141 1.5625h-5.7422c-0.40234 0-1.0703-0.59766-1.6562-1.125-0.99219-0.89062-2.2227-2-3.8125-2-0.79297 0-5.5352 0.67188-6.3047 0.78125h-4.6328v-4.6875c0-0.42969-0.35156-0.78125-0.78125-0.78125h-3.4375c-0.96094 0-1.8828 0.28906-2.6719 0.83594-0.1875 0.12891-0.39062 0.27344-0.60938 0.42578-2.4688 1.7461-7.0391 4.9766-12.984 5.6406-0.67578-0.3125-1.4062-0.52344-2.1797-0.60938v-5.5156c0-0.42969-0.35156-0.78125-0.78125-0.78125h-10.156c-0.42969 0-0.78125 0.35156-0.78125 0.78125v3.125c0 0.13672 0.035156 0.26953 0.10156 0.38672l3.125 5.4688c0.14062 0.24219 0.39844 0.39453 0.67969 0.39453h0.73438c-0.46875 0.94141-0.73438 2-0.73438 3.125 0 3.8789 3.1523 7.0312 7.0312 7.0312 1.6719 0 3.2031-0.58594 4.4141-1.5625h36.992c0.42969 0 0.78125-0.35156 0.78125-0.78125v-3.125h0.96094c0.71094 3.1289 3.5117 5.4688 6.8555 5.4688 3.3398 0 6.1406-2.3438 6.8555-5.4688h1.7422v3.125c0 0.42969 0.35156 0.78125 0.78125 0.78125h8.5938c0.42969 0 0.78125-0.35156 0.78125-0.78125v-3.9062c0-0.20703-0.082031-0.40625-0.22656-0.55469zm-39.617-6.5781c2.1016-0.29688 4.9922-0.67969 5.4688-0.67969 0.97656 0 1.8672 0.78906 2.7266 1.5625h-7.4141c-0.26562 0-0.52344 0.007812-0.78125 0.023438zm-5.4688 0.10156h3.9062v0.96094c-1.3516 0.20312-2.6094 0.5625-3.9062 0.92969v-1.8945zm0.35156 3.418c1.9297-0.55469 3.75-1.0742 5.8984-1.0742h8.1094l-0.78125 1.5625h-6.5469c-2.3633 0-4.2891 0.55078-6.3281 1.1328-2.0781 0.59375-4.2266 1.2109-6.9531 1.2109h-10.156c0-0.53906-0.0625-1.0625-0.17969-1.5625h9.5547c2.9492 0 5.2031-0.64453 7.3828-1.2695zm-6.9453-7.9102c0.21484-0.15234 0.41406-0.29297 0.59375-0.41797 0.52344-0.36719 1.1406-0.55469 1.7812-0.55469h2.6562v7.7969c-1.6328 0.4375-3.3789 0.79688-5.4688 0.79688h-10.109c-0.36719-0.73438-0.85938-1.3984-1.4453-1.957 5.4922-1.0625 9.6484-4 11.996-5.6562zm-26.219-0.97656h8.5938v1.5625h-8.5938zm2.7969 7.0312-2.2344-3.9062h8.0312v1.6094c-1.7617 0.19531-3.3281 1.0469-4.4531 2.2969zm6.5781 10.156c-3.0156 0-5.4688-2.4531-5.4688-5.4688s2.4531-5.4688 5.4688-5.4688 5.4688 2.4531 5.4688 5.4688-2.4531 5.4688-5.4688 5.4688zm33.891-1.5625h-28.051c0.46875-0.70312 0.81641-1.4922 1.0117-2.3438h10.336c2.9492 0 5.2031-0.64453 7.3828-1.2695 1.9297-0.55469 3.75-1.0742 5.8984-1.0742h5.7656zm9.0781-3.9062h-1.5625c-0.42969 0-0.78125 0.35156-0.78125 0.78125v3.125h-4.9844l3.9062-7.8125h4.6094c-0.75 1.1172-1.1875 2.4609-1.1875 3.9062zm7.0312 5.4688c-3.0156 0-5.4688-2.4531-5.4688-5.4688s2.4531-5.4688 5.4688-5.4688 5.4688 2.4531 5.4688 5.4688-2.4531 5.4688-5.4688 5.4688zm8.5938-5.4688h-1.5625c0-0.87109-0.16016-1.7031-0.45312-2.4766 0.84766 0.27344 1.5625 0.51562 2.0156 0.67969zm8.5938 3.9062h-7.0312v-0.78125h7.0312zm0-2.3438h-7.0312v-3.0078c4.2266 0.67187 6.3672 2.0781 7.0312 2.5859z"/>
+                               <text x="0.0" y="117.5" font-size="5.0" font-weight="bold" font-family="Arbeit Regular, Helvetica, Arial-Unicode, Arial, Sans-serif" fill="#000000">Created by Izwar Muis</text><text x="0.0" y="122.5" font-size="5.0" font-weight="bold" font-family="Arbeit Regular, Helvetica, Arial-Unicode, Arial, Sans-serif" fill="#000000">from Noun Project</text>
+                            </svg> -->
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Multi-Vehicle Racing Line Optimization</h3>
+                            <p class="project-description">
+                                Designed a trajectory-optimization controller for dual autonomous race cars, integrating advanced vehicle dynamics and collision avoidance to enable coordinated high-performance racing.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Robotics</span>
+                                <span class="tech-tag">Controls</span>
+                                <span class="tech-tag">Simulation</span>
+                                <span class="tech-tag">MPC</span>
+                                <span class="tech-tag">Reinforcement Learning</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 8: Buggy -->
+                    <div class="project-card fade-in" data-tags="Robotics,Controls,Simulation,MPC,WeBots" data-project="buggy">
+                        <!-- <img src="images/asr-project.jpg" alt="Speech Recognition" class="project-image"> -->
+                        <div class="project-icon">
+                            <svg fill="none" viewBox="0 0 520 520" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                                <g><g>
+                                <path d="M439.022,219.684l-109.165-80.01c-1.037-0.93-2.087-1.853-3.154-2.763c-31.18-26.561-72.101-41.189-115.224-41.189H55.652
+                                        c-2.954,0-5.787,1.174-7.875,3.265c-2.087,2.09-3.259,4.924-3.256,7.878l0.011,10.471c-3.636-1.391-7.579-2.162-11.698-2.162
+                                        C14.729,115.174,0,129.903,0,148.009v46.005c0,18.106,14.729,32.835,32.835,32.835c4.164,0,8.146-0.788,11.815-2.207l0.009,8.122
+                                        C17.755,250.743,0,281.387,0,316.104c0,55.236,44.938,100.174,100.174,100.174c43.532,0,80.661-27.915,94.444-66.783h16.86
+                                        c6.146,0,11.13-4.984,11.13-11.13s-4.984-11.13-11.13-11.13h-11.745c0.016-0.141,0.026-0.283,0.041-0.424
+                                        c0.056-0.522,0.105-1.045,0.153-1.569c0.032-0.36,0.068-0.72,0.096-1.081c0.044-0.56,0.081-1.123,0.116-1.685
+                                        c0.021-0.328,0.046-0.657,0.062-0.985c0.032-0.617,0.056-1.235,0.077-1.855c0.01-0.279,0.024-0.558,0.032-0.837
+                                        c0.023-0.895,0.037-1.793,0.037-2.694c0-0.901-0.013-1.799-0.037-2.694c-0.008-0.279-0.022-0.558-0.032-0.837
+                                        c-0.021-0.62-0.044-1.239-0.077-1.855c-0.018-0.328-0.042-0.657-0.062-0.985c-0.036-0.563-0.071-1.125-0.116-1.685
+                                        c-0.029-0.361-0.063-0.72-0.096-1.081c-0.048-0.524-0.097-1.047-0.153-1.569c-0.014-0.141-0.026-0.283-0.041-0.424h56.219
+                                        c0.013,0,0.028,0.002,0.041,0.002c0.006,0,0.01-0.001,0.016-0.001c0.01,0,0.02-0.001,0.03-0.001h56.228
+                                        c-0.016,0.14-0.026,0.283-0.041,0.423c-0.056,0.524-0.105,1.05-0.152,1.576c-0.032,0.357-0.067,0.713-0.096,1.071
+                                        c-0.046,0.562-0.081,1.128-0.117,1.692c-0.021,0.327-0.045,0.653-0.062,0.982c-0.033,0.622-0.056,1.247-0.077,1.871
+                                        c-0.01,0.273-0.023,0.545-0.031,0.819c-0.024,0.897-0.038,1.795-0.038,2.697c0,0.902,0.013,1.8,0.037,2.696
+                                        c0.008,0.274,0.022,0.547,0.031,0.819c0.022,0.624,0.044,1.249,0.077,1.871c0.018,0.327,0.042,0.654,0.062,0.982
+                                        c0.036,0.565,0.071,1.13,0.117,1.692c0.029,0.357,0.063,0.715,0.096,1.071c0.048,0.526,0.097,1.052,0.152,1.576
+                                        c0.014,0.14,0.026,0.283,0.041,0.423h-34.005c-6.146,0-11.13,4.984-11.13,11.13s4.984,11.13,11.13,11.13h39.121
+                                        c13.783,38.867,50.912,66.783,94.444,66.783c55.236,0,100.174-44.938,100.174-100.174
+                                        C512,270.292,481.085,231.564,439.022,219.684z M43.409,194.015c0,5.83-4.744,10.574-10.574,10.574
+                                        c-5.83,0-10.574-4.744-10.574-10.574v-46.005c0-5.83,4.744-10.574,10.574-10.574c5.83,0,10.574,4.744,10.574,10.574V194.015z
+                                        M397.625,216.941c-7.312,1.043-14.369,2.876-21.088,5.413c-1.508-8.929-3.898-17.662-7.145-26.105L397.625,216.941z
+                                        M123.63,117.983c-9.714,5.379-18.865,11.686-27.302,18.865c-11.697,9.952-21.58,21.188-29.477,33.37l-0.057-52.235H123.63z
+                                        M133.565,137.815v42.238L116.093,217.2c-5.187-0.831-10.502-1.27-15.919-1.27c-10.745,0-21.097,1.707-30.807,4.853
+                                        C76.96,185.81,100.746,156.156,133.565,137.815z M177.997,319.696c-0.011,0.238-0.021,0.476-0.033,0.716
+                                        c-0.063,1.171-0.15,2.335-0.266,3.49c-0.016,0.155-0.034,0.308-0.051,0.462c-0.124,1.171-0.269,2.335-0.445,3.489
+                                        c-0.007,0.047-0.012,0.092-0.02,0.139c-0.194,1.259-0.417,2.507-0.67,3.745c-0.008,0.036-0.014,0.07-0.022,0.106
+                                        c-7.3,35.442-38.744,62.174-76.315,62.174c-42.961,0-77.913-34.952-77.913-77.913s34.952-77.913,77.913-77.913
+                                        c37.571,0,69.015,26.732,76.315,62.175c0.007,0.034,0.014,0.07,0.021,0.105c0.253,1.238,0.477,2.487,0.671,3.745
+                                        c0.007,0.046,0.012,0.092,0.02,0.139c0.176,1.154,0.321,2.32,0.445,3.489c0.017,0.154,0.036,0.308,0.051,0.462
+                                        c0.116,1.156,0.203,2.321,0.266,3.492c0.013,0.238,0.023,0.476,0.033,0.715c0.055,1.191,0.091,2.388,0.091,3.592
+                                        C178.088,317.309,178.051,318.504,177.997,319.696z M194.618,282.713c-5.754-16.227-15.577-30.542-28.238-41.716h39.284
+                                        l29.03,41.716H194.618z M254.008,271.495l-33.394-47.987c-2.08-2.991-5.494-4.773-9.136-4.773H139.97l14.798-31.46
+                                        c0.697-1.481,1.058-3.099,1.058-4.737v-54.895c17.135-6.227,35.932-9.661,55.652-9.661c37.688,0.001,72.007,12.51,97.756,33.145
+                                        l-25.951,56.56l-9.151-5.278l5.89-5.89c4.346-4.346,4.346-11.394,0-15.742c-4.348-4.345-11.393-4.345-15.742,0l-32.304,32.304
+                                        c-4.346,4.346-4.346,11.394,0,15.742c2.174,2.173,5.022,3.26,7.87,3.26s5.697-1.087,7.87-3.26l10.116-10.116l16.126,9.301
+                                        L254.008,271.495z M317.382,282.714h-44.03v-0.001l25.109-54.727c0.002-0.004,0.003-0.008,0.006-0.011l27.796-60.582
+                                        c16.23,18.499,26.773,41.095,29.314,65.863C338.098,245.161,324.568,262.449,317.382,282.714z M411.826,394.017
+                                        c-37.57,0-69.014-26.731-76.314-62.172c-0.008-0.036-0.014-0.072-0.022-0.109c-0.253-1.238-0.476-2.485-0.67-3.743
+                                        c-0.007-0.046-0.013-0.092-0.02-0.139c-0.176-1.154-0.321-2.32-0.445-3.489c-0.017-0.154-0.036-0.308-0.051-0.462
+                                        c-0.116-1.155-0.203-2.32-0.266-3.489c-0.013-0.239-0.022-0.479-0.033-0.718c-0.055-1.191-0.091-2.386-0.091-3.59
+                                        c0-1.203,0.037-2.4,0.091-3.59c0.011-0.239,0.021-0.479,0.033-0.718c0.065-1.17,0.15-2.334,0.266-3.489
+                                        c0.016-0.155,0.034-0.308,0.051-0.462c0.124-1.171,0.269-2.335,0.445-3.489c0.007-0.047,0.012-0.092,0.02-0.139
+                                        c0.194-1.258,0.417-2.507,0.67-3.744c0.008-0.036,0.016-0.072,0.022-0.108c7.299-35.443,38.744-62.175,76.314-62.175
+                                        c42.961,0,77.913,34.952,77.913,77.913S454.787,394.017,411.826,394.017z"/>
+                                </g></g>
+                                <g><g>
+                                <path d="M411.826,260.452c-30.687,0-55.652,24.966-55.652,55.652c0,30.687,24.966,55.652,55.652,55.652
+                                        c30.687,0,55.652-24.966,55.652-55.652C467.478,285.418,442.513,260.452,411.826,260.452z M411.826,349.496
+                                        c-18.412,0-33.391-14.979-33.391-33.391c0-18.412,14.979-33.391,33.391-33.391c18.412,0,33.391,14.979,33.391,33.391
+                                        C445.217,334.516,430.238,349.496,411.826,349.496z"/>
+                                </g></g>
+                                <g><g>
+                                <path d="M100.174,260.452c-30.687,0-55.652,24.966-55.652,55.652c0,30.687,24.966,55.652,55.652,55.652
+                                        c30.687,0,55.652-24.966,55.652-55.652C155.826,285.418,130.861,260.452,100.174,260.452z M100.174,349.496
+                                        c-18.412,0-33.391-14.979-33.391-33.391c0-18.412,14.979-33.391,33.391-33.391c18.412,0,33.391,14.979,33.391,33.391
+                                        C133.565,334.516,118.586,349.496,100.174,349.496z"/>
+                                </g></g>
+                                <g><g>
+                                <path d="M255.775,336.195c-0.131-0.712-0.355-1.414-0.633-2.092c-0.278-0.669-0.623-1.313-1.024-1.914
+                                        c-0.4-0.613-0.867-1.181-1.38-1.693c-0.512-0.512-1.08-0.979-1.692-1.38c-0.601-0.4-1.247-0.746-1.926-1.024
+                                        c-0.668-0.278-1.368-0.501-2.08-0.646c-1.436-0.278-2.905-0.278-4.341,0c-0.712,0.145-1.414,0.367-2.081,0.646
+                                        c-0.679,0.278-1.323,0.624-1.924,1.024c-0.613,0.401-1.181,0.868-1.693,1.38c-0.512,0.512-0.979,1.08-1.38,1.693
+                                        c-0.412,0.601-0.746,1.245-1.024,1.914c-0.278,0.679-0.501,1.38-0.646,2.093c-0.145,0.712-0.211,1.447-0.211,2.17
+                                        c0,0.722,0.067,1.458,0.21,2.17c0.145,0.712,0.367,1.414,0.646,2.08c0.278,0.679,0.612,1.325,1.024,1.926
+                                        c0.401,0.612,0.868,1.18,1.38,1.692c0.512,0.513,1.08,0.981,1.693,1.38c0.601,0.401,1.245,0.746,1.924,1.024
+                                        c0.669,0.278,1.369,0.501,2.081,0.634c0.712,0.145,1.447,0.223,2.17,0.223c0.722,0,1.458-0.078,2.17-0.223
+                                        c0.712-0.134,1.414-0.356,2.08-0.634c0.679-0.278,1.325-0.623,1.926-1.024c0.612-0.4,1.18-0.867,1.692-1.38
+                                        c0.513-0.512,0.981-1.08,1.38-1.692c0.401-0.601,0.746-1.247,1.024-1.926c0.278-0.668,0.501-1.368,0.634-2.08
+                                        c0.145-0.713,0.223-1.448,0.223-2.17C255.998,337.642,255.92,336.906,255.775,336.195z"/>
+                                </g></g>
+                            </svg>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Autonomous Buggy Control</h3>
+                            <p class="project-description">
+                                Engineered and deployed LQR/MPC control with EKF-SLAM for an autonomous buggy, achieving precise GPS-based trajectory tracking in simulation.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Robotics</span>
+                                <span class="tech-tag">Controls</span>
+                                <span class="tech-tag">Simulation</span>
+                                <span class="tech-tag">MPC</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 9: Nitinol -->
+                    <div class="project-card fade-in" data-tags="Mechanical" data-project="nitinol">
+                        <!-- <img src="images/asr-project.jpg" alt="Speech Recognition" class="project-image"> -->
+                        <div class="project-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21.5 17.207l2.707-2.707L19.5 9.793l-1 1L17.207 9.5l2-2L16.5 4.793l-2 2L13.207 5.5l1-1L9.5-.207 6.793 2.5 11.5 7.207l1-1L13.793 7.5l-2 2 2.707 2.707 2-2 1.293 1.293-1 1zM8.207 2.5L9.5 1.207 12.793 4.5 11.5 5.793zm5 7L16.5 6.207 17.793 7.5 14.5 10.793zm9.586 5L21.5 15.793 18.207 12.5l1.293-1.293zM15 16a7.008 7.008 0 0 1-7-7h1a6.007 6.007 0 0 0 6 6zm0 4A11.012 11.012 0 0 1 4 9h1a10.011 10.011 0 0 0 10 10zm0 3v1A15.017 15.017 0 0 1 0 9h1a14.016 14.016 0 0 0 14 14z"/>
+                            </svg>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Nitinol Actuator for Satellite Solar Panel Deployment</h3>
+                            <p class="project-description">
+                                Developed a miniature satellite prototype using Nitinol actuators for solar panel deployment, reducing power consumption by over 40% and validating structural performance through computational analysis.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Mechanical</span>
+                                <span class="tech-tag">Satellite</span>
+                                <span class="tech-tag">Shape Memory Alloy</span>
+                                <span class="tech-tag">Kinematics</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 10: Face Mask -->
+                    <!-- <div class="project-card fade-in" data-tags="Deep Learning,TTS,ASR,PyTorch" data-project="face-mask">
+                        <div class="project-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                                <line x1="12" y1="19" x2="12" y2="22"></line>
+                            </svg>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Face Mask Recognition System</h3>
+                            <p class="project-description">
+                                Generated 300 hours of synthetic data using Variational Inference. Achieved Levenshtein Distance of 23.38 and Loss of 0.14.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Deep Learning</span>
+                                <span class="tech-tag">TTS</span>
+                                <span class="tech-tag">ASR</span>
+                                <span class="tech-tag">PyTorch</span>
+                            </div>
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </section>
@@ -1106,7 +1817,7 @@
                     <div class="section-label">Recognition</div>
                     <h2 class="section-title">Patents & Publications</h2>
                     <p class="section-description">
-                        Contributing to the advancement of robotics and automation technology
+                        Contributing to the advancement of robotics, AI and automation technology
                     </p>
                 </div>
                 
@@ -1114,27 +1825,31 @@
                     <div class="achievement-card fade-in">
                         <div class="achievement-type">Patent</div>
                         <div class="achievement-title">Visual Context Based Semantic Perception for Robotic Manipulation and Planning</div>
+                        <div class="achievement-meta">Shelbourn, S., <b><span style="color: #e5e7eb;">Gopinath, N.C</span></b> & Chawla, S. - Walmart | Jan 2025</div>
                     </div>
                     
                     <div class="achievement-card fade-in">
                         <div class="achievement-type">Patent</div>
                         <div class="achievement-title">Multi Axial End of Arm Tool for Robotic Case Manipulation</div>
+                        <div class="achievement-meta"><b><span style="color: #e5e7eb;">Gopinath, N.C</span></b>, Shelbourn, S.T. & Byers, G.J - Walmart | Feb 2026</div>
                     </div>
                     
                     <div class="achievement-card fade-in">
                         <div class="achievement-type">Patent</div>
                         <div class="achievement-title">Rigidized Conveyor Support</div>
+                        <div class="achievement-meta"><b><span style="color: #e5e7eb;">Gopinath, N.C</span></b>, Shelbourn, S.T. & Byers, G.J - Walmart | Feb 2026</div>
                     </div>
                     
                     <div class="achievement-card fade-in">
                         <div class="achievement-type">Patent</div>
                         <div class="achievement-title">SwingBot Efficiency Enhancement: AMR Trailer Door Opening and Closing with Location-Based Prioritization</div>
+                        <div class="achievement-meta">Krishna Prasad, P., Zhao, Y. & <b><span style="color: #e5e7eb;">Gopinath, N.C</span></b> | Jan 2026</div>
                     </div>
                     
                     <div class="achievement-card fade-in">
                         <div class="achievement-type">Publication</div>
                         <div class="achievement-title">"Where are our robot spines?" - Dynamic Walking Conference</div>
-                        <div class="achievement-meta">Johnson, A.M & Gopinath, N.C | May 2024</div>
+                        <div class="achievement-meta">Johnson, A.M, ... <b><span style="color: #e5e7eb;">Gopinath, N.C</span></b>, et. al. | May 2024</div>
                     </div>
                 </div>
                 
@@ -1253,6 +1968,420 @@
     </footer>
     
     <script>
+        // Project Data - Customize this with your detailed project information
+        const projectData = {
+            'vwsd': {
+                title: 'Visual-Word Sense Disambiguation',
+                image: 'images/vwsd-project.jpg',
+                tech: ['MetaClip', 'Computer Vision', 'PyTorch', 'NLP'],
+                description: 'Developed a state-of-the-art Visual Word Sense Disambiguation system using the MetaClip model, evaluated against Weighted Average Loss metrics. The system significantly improved upon baseline performance across multiple key metrics.',
+                keyFeatures: [
+                    'Improved Prominent Word Bias handling compared to baseline',
+                    'Enhanced Semantic Interpretation capabilities',
+                    'Better Literal Word Preference detection',
+                    'Achieved Hit Rate of 0.7235',
+                    'Mean Reciprocal Rank (MRR) of 0.8280'
+                ],
+                technicalDetails: [
+                    'Implemented custom training pipeline with MetaClip architecture',
+                    'Developed novel evaluation metrics for word sense disambiguation',
+                    'Optimized model for real-time inference',
+                    'Created comprehensive test suite for various disambiguation scenarios'
+                ],
+                results: [
+                    'Hit Rate: 72.35% - 15% improvement over baseline',
+                    'MRR: 0.8280 - Top-tier performance in the field',
+                    'Successfully disambiguated complex multi-sense words',
+                    'Demonstrated robust performance across diverse contexts'
+                ],
+                gallery: ['images/vwsd-results-1.jpg', 'images/vwsd-results-2.jpg'],
+                links: [
+                    { text: 'GitHub Repository', url: 'https://github.com/NikhilCG26' },
+                    { text: 'Project Report', url: '#' }
+                ]
+            },
+            'asr': {
+                title: 'Automatic Speech Recognition using Synthetic Speech',
+                image: 'images/asr-project.jpg',
+                tech: ['Deep Learning', 'TTS', 'ASR', 'PyTorch'],
+                description: 'Created a state-of-the-art speech recognition system using Attention-based Deep Neural Network models trained exclusively on synthetic audio data generated through Variational Inference with adversarial learning Text-to-Speech models.',
+                keyFeatures: [
+                    'Generated 300 hours of high-quality synthetic speech data',
+                    'Implemented Variational Inference with adversarial learning for TTS',
+                    'Developed attention-based DNN architecture for ASR',
+                    'Achieved competitive performance using only synthetic data'
+                ],
+                technicalDetails: [
+                    'TTS model: Variational autoencoder with adversarial training',
+                    'ASR architecture: Transformer-based attention mechanism',
+                    'Training pipeline: Multi-stage training with progressive complexity',
+                    'Data augmentation: Pitch shifting, time stretching, noise injection'
+                ],
+                results: [
+                    'Levenshtein Distance: 23.38',
+                    'Training Loss: 0.14',
+                    'Successfully trained robust ASR using 100% synthetic data',
+                    'Demonstrated transferability to real speech recognition tasks'
+                ],
+                gallery: ['images/asr-arch.jpg', 'images/asr-results.jpg'],
+                links: [
+                    { text: 'GitHub Repository', url: 'https://github.com/NikhilCG26' },
+                    { text: 'Technical Paper', url: '#' }
+                ]
+            },
+            'dl-portfolio': {
+                title: 'Deep Learning Portfolio',
+                image: 'images/dl-portfolio.jpg',
+                tech: ['Deep Learning', 'CNN', 'LSTM', 'Attention', 'PyTorch'],
+                description: 'Comprehensive collection of deep learning projects spanning computer vision, speech recognition, and natural language processing, showcasing expertise in various neural network architectures and applications.',
+                keyFeatures: [
+                    'Phoneme Recognition: 89.2% accuracy on Librispeech',
+                    'Face Classification: 89.9% with position-invariant patterns',
+                    'Face Verification: 64.3% for novel class detection',
+                    'ASR with LSTMs/RNNs/CTCs: Levenshtein Distance of 3.98',
+                    'Attention-based TTS: Levenshtein Distance of 9.99'
+                ],
+                technicalDetails: [
+                    'Implemented various CNN architectures for image tasks',
+                    'Developed LSTM and RNN models for sequence processing',
+                    'Created attention mechanisms for sequence-to-sequence tasks',
+                    'Optimized models for both accuracy and inference speed',
+                    'Utilized transfer learning and fine-tuning techniques'
+                ],
+                results: [
+                    'Consistently achieved state-of-the-art or near-SOTA results',
+                    'Demonstrated versatility across multiple domains',
+                    'Optimized models for production deployment',
+                    'Comprehensive documentation and code organization'
+                ],
+                gallery: ['images/dl-cnn.jpg', 'images/dl-lstm.jpg', 'images/dl-attention.jpg'],
+                links: [
+                    { text: 'GitHub Repository', url: 'https://github.com/NikhilCG26' },
+                    { text: 'Project Documentation', url: '#' }
+                ]
+            },
+            'construction': {
+                title: 'Construction Site Hazard Detection',
+                image: 'images/construction.png',
+                tech: ['YoloV7', 'Computer Vision', 'Object Detection', 'Safety'],
+                description: 'Developed an advanced worker detection and safety monitoring system for construction sites using YoloV7 and Transfer Learning, with real-time 3D coordinate computation for spatial awareness and hazard detection.',
+                keyFeatures: [
+                    'Real-time worker detection and tracking',
+                    '3D global coordinate computation using transformation matrices',
+                    'Hazard zone detection and alerting',
+                    'Multi-camera support for comprehensive site coverage',
+                    'Integration with safety management systems'
+                ],
+                technicalDetails: [
+                    'YoloV7 architecture with custom dataset fine-tuning',
+                    'Camera calibration and 3D reconstruction pipeline',
+                    'Homography estimation for ground plane mapping',
+                    'Real-time processing: 30+ FPS on edge devices',
+                    'RESTful API for integration with existing systems'
+                ],
+                results: [
+                    'mAP@0.5: 92% - Industry-leading detection accuracy',
+                    'Precision: 90% - Minimal false positives',
+                    'Recall: 93% - Excellent coverage of all workers',
+                    'Processing speed: 35 FPS on NVIDIA Jetson Xavier',
+                    'Deployed in 3 construction sites with positive feedback'
+                ],
+                gallery: ['images/construction-demo-1.jpg', 'images/construction-demo-2.jpg', 'images/construction-3d.jpg'],
+                links: [
+                    { text: 'GitHub Repository', url: 'https://github.com/NikhilCG26' },
+                    { text: 'Demo Video', url: '#' },
+                    { text: 'Technical Report', url: '#' }
+                ]
+            },
+            'quadruped': {
+                title: 'Quadruped Robot with Spine Optimization',
+                image: 'images/quadruped-research.jpg',
+                tech: ['ROS', 'Robotics', 'PyBullet', 'MPC', 'Optimization'],
+                description: 'Research project on computational design optimization of a quadruped robot with a flexible spine, using PyBullet simulation and hierarchical Model Predictive Control for improved locomotion performance. Conducted in collaboration with Google DeepMind.',
+                keyFeatures: [
+                    'Computational design optimization for spine parameters',
+                    'Hierarchical Model Predictive Control (MPC) framework',
+                    'Physics-based simulation in PyBullet',
+                    'Joint command generation for coordinated locomotion',
+                    'Integration with ROS for control and visualization'
+                ],
+                technicalDetails: [
+                    'Spine design parameters: stiffness, damping, joint limits',
+                    'Two-level MPC: high-level trajectory planning, low-level control',
+                    'Optimization: CMA-ES for design, QP for control',
+                    'Simulation: 1kHz control loop, contact dynamics modeling',
+                    'ROS integration: tf2, joint_state_publisher, rviz visualization'
+                ],
+                results: [
+                    '25% improvement in locomotion speed with optimized spine',
+                    '40% reduction in energy consumption during gait',
+                    'Robust performance across various terrains',
+                    'Successful sim-to-real transfer on prototype hardware',
+                    'Published at Dynamic Walking Conference 2024'
+                ],
+                gallery: ['images/quadruped-sim.jpg', 'images/quadruped-spine.jpg', 'images/quadruped-gait.jpg'],
+                links: [
+                    { text: 'Publication', url: '#' },
+                    { text: 'CMU Robomechanics Lab', url: 'https://www.cmu.edu/me/robomechanicslab/' },
+                    { text: 'Simulation Demo', url: '#' }
+                ]
+            },
+            'mars-rover': {
+                title: 'Mars Rover - Astra Robotics',
+                image: 'images/Rover.png',
+                tech: ['Robotics', 'Mechanical Design', 'SolidWorks', 'Leadership'],
+                description: 'Led the mechanical subsystem development for a Mars rover as part of Astra Robotics team. Designed and integrated chassis, suspension system, and robotic arm for autonomous navigation and sample collection in challenging terrain.',
+                keyFeatures: [
+                    'Rocker-bogie suspension system for rough terrain',
+                    '6-DOF robotic arm for sample collection',
+                    'Modular chassis design for easy maintenance',
+                    'Integration of motors, sensors, and electronics',
+                    'Optimized weight distribution and center of gravity'
+                ],
+                technicalDetails: [
+                    'CAD design in SolidWorks with FEA analysis',
+                    'Custom suspension with 30cm obstacle clearance',
+                    'Arm payload capacity: 2kg at full extension',
+                    'Chassis material: Aluminum 6061-T6',
+                    'Total rover weight: 45kg including all subsystems'
+                ],
+                results: [
+                    'Successfully completed rover assembly and testing',
+                    'Demonstrated autonomous navigation capabilities',
+                    'Won Best Mechanical Design at Robotics Competition',
+                    'Team leadership: Coordinated 8-member mechanical team',
+                    'Project completed on time and within budget'
+                ],
+                gallery: ['images/rover-cad.jpg', 'images/rover-assembly.jpg', 'images/rover-team.jpg'],
+                links: [
+                    { text: 'Team Website', url: '#' },
+                    { text: 'Competition Video', url: '#' }
+                ]
+            },
+            'racing': {
+                title: 'Multi-Vehicle Racing Line Optimization',
+                image: 'images/quadruped-research.jpg',
+                tech: ['ROS', 'Robotics', 'PyBullet', 'MPC', 'Optimization'],
+                description: 'Research project on computational design optimization of a quadruped robot with a flexible spine, using PyBullet simulation and hierarchical Model Predictive Control for improved locomotion performance. Conducted in collaboration with Google DeepMind.',
+                keyFeatures: [
+                    'Computational design optimization for spine parameters',
+                    'Hierarchical Model Predictive Control (MPC) framework',
+                    'Physics-based simulation in PyBullet',
+                    'Joint command generation for coordinated locomotion',
+                    'Integration with ROS for control and visualization'
+                ],
+                technicalDetails: [
+                    'Spine design parameters: stiffness, damping, joint limits',
+                    'Two-level MPC: high-level trajectory planning, low-level control',
+                    'Optimization: CMA-ES for design, QP for control',
+                    'Simulation: 1kHz control loop, contact dynamics modeling',
+                    'ROS integration: tf2, joint_state_publisher, rviz visualization'
+                ],
+                results: [
+                    '25% improvement in locomotion speed with optimized spine',
+                    '40% reduction in energy consumption during gait',
+                    'Robust performance across various terrains',
+                    'Successful sim-to-real transfer on prototype hardware',
+                    'Published at Dynamic Walking Conference 2024'
+                ],
+                gallery: ['images/quadruped-sim.jpg', 'images/quadruped-spine.jpg', 'images/quadruped-gait.jpg'],
+                links: [
+                    { text: 'Publication', url: '#' },
+                    { text: 'CMU Robomechanics Lab', url: 'https://www.cmu.edu/me/robomechanicslab/' },
+                    { text: 'Simulation Demo', url: '#' }
+                ]
+            },
+            'buggy': {
+                title: 'Path Planning and Control Strategies for an Autonomous Buggy',
+                image: 'images/quadruped-research.jpg',
+                tech: ['ROS', 'Robotics', 'PyBullet', 'MPC', 'Optimization'],
+                description: 'Research project on computational design optimization of a quadruped robot with a flexible spine, using PyBullet simulation and hierarchical Model Predictive Control for improved locomotion performance. Conducted in collaboration with Google DeepMind.',
+                keyFeatures: [
+                    'Computational design optimization for spine parameters',
+                    'Hierarchical Model Predictive Control (MPC) framework',
+                    'Physics-based simulation in PyBullet',
+                    'Joint command generation for coordinated locomotion',
+                    'Integration with ROS for control and visualization'
+                ],
+                technicalDetails: [
+                    'Spine design parameters: stiffness, damping, joint limits',
+                    'Two-level MPC: high-level trajectory planning, low-level control',
+                    'Optimization: CMA-ES for design, QP for control',
+                    'Simulation: 1kHz control loop, contact dynamics modeling',
+                    'ROS integration: tf2, joint_state_publisher, rviz visualization'
+                ],
+                results: [
+                    '25% improvement in locomotion speed with optimized spine',
+                    '40% reduction in energy consumption during gait',
+                    'Robust performance across various terrains',
+                    'Successful sim-to-real transfer on prototype hardware',
+                    'Published at Dynamic Walking Conference 2024'
+                ],
+                gallery: ['images/quadruped-sim.jpg', 'images/quadruped-spine.jpg', 'images/quadruped-gait.jpg'],
+                links: [
+                    { text: 'Publication', url: '#' },
+                    { text: 'CMU Robomechanics Lab', url: 'https://www.cmu.edu/me/robomechanicslab/' },
+                    { text: 'Simulation Demo', url: '#' }
+                ]
+            },
+            'nitinol': {
+                title: 'Path Planning and Control Strategies for an Autonomous Buggy',
+                image: 'images/quadruped-research.jpg',
+                tech: ['ROS', 'Robotics', 'PyBullet', 'MPC', 'Optimization'],
+                description: 'Research project on computational design optimization of a quadruped robot with a flexible spine, using PyBullet simulation and hierarchical Model Predictive Control for improved locomotion performance. Conducted in collaboration with Google DeepMind.',
+                keyFeatures: [
+                    'Computational design optimization for spine parameters',
+                    'Hierarchical Model Predictive Control (MPC) framework',
+                    'Physics-based simulation in PyBullet',
+                    'Joint command generation for coordinated locomotion',
+                    'Integration with ROS for control and visualization'
+                ],
+                technicalDetails: [
+                    'Spine design parameters: stiffness, damping, joint limits',
+                    'Two-level MPC: high-level trajectory planning, low-level control',
+                    'Optimization: CMA-ES for design, QP for control',
+                    'Simulation: 1kHz control loop, contact dynamics modeling',
+                    'ROS integration: tf2, joint_state_publisher, rviz visualization'
+                ],
+                results: [
+                    '25% improvement in locomotion speed with optimized spine',
+                    '40% reduction in energy consumption during gait',
+                    'Robust performance across various terrains',
+                    'Successful sim-to-real transfer on prototype hardware',
+                    'Published at Dynamic Walking Conference 2024'
+                ],
+                gallery: ['images/quadruped-sim.jpg', 'images/quadruped-spine.jpg', 'images/quadruped-gait.jpg'],
+                links: [
+                    { text: 'Publication', url: '#' },
+                    { text: 'CMU Robomechanics Lab', url: 'https://www.cmu.edu/me/robomechanicslab/' },
+                    { text: 'Simulation Demo', url: '#' }
+                ]
+            }
+        };
+        
+        // Open project modal
+        function openModal(projectId) {
+            const project = projectData[projectId];
+            if (!project) return;
+            
+            const modal = document.getElementById('projectModal');
+            
+            // Set content
+            document.getElementById('modalImage').src = project.image;
+            document.getElementById('modalTitle').textContent = project.title;
+            
+            // Tech tags
+            const techContainer = document.getElementById('modalTech');
+            techContainer.innerHTML = project.tech.map(tech => 
+                `<span class="tech-tag">${tech}</span>`
+            ).join('');
+            
+            // Description
+            document.getElementById('modalDescription').textContent = project.description;
+            
+            // Key Features
+            const featuresSection = document.getElementById('modalKeyFeatures');
+            featuresSection.innerHTML = `
+                <h3>Key Features</h3>
+                <ul>${project.keyFeatures.map(feature => `<li>${feature}</li>`).join('')}</ul>
+            `;
+            
+            // Technical Details
+            const technicalSection = document.getElementById('modalTechnicalDetails');
+            technicalSection.innerHTML = `
+                <h3>Technical Details</h3>
+                <ul>${project.technicalDetails.map(detail => `<li>${detail}</li>`).join('')}</ul>
+            `;
+            
+            // Results
+            const resultsSection = document.getElementById('modalResults');
+            resultsSection.innerHTML = `
+                <h3>Results & Impact</h3>
+                <ul>${project.results.map(result => `<li>${result}</li>`).join('')}</ul>
+            `;
+            
+            // Gallery
+            const gallerySection = document.getElementById('modalGallery');
+            if (project.gallery && project.gallery.length > 0) {
+                gallerySection.innerHTML = `
+                    <h3>Project Gallery</h3>
+                    <div class="modal-gallery">
+                        ${project.gallery.map(img => `<img src="${img}" alt="Project image">`).join('')}
+                    </div>
+                `;
+            } else {
+                gallerySection.innerHTML = '';
+            }
+            
+            // Links
+            const linksContainer = document.getElementById('modalLinks');
+            linksContainer.innerHTML = project.links.map(link => 
+                `<a href="${link.url}" target="_blank" class="modal-link-btn">${link.text} →</a>`
+            ).join('');
+            
+            // Show modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Close modal
+        function closeModal() {
+            const modal = document.getElementById('projectModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Add click listeners to project cards
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const projectId = card.getAttribute('data-project');
+                openModal(projectId);
+            });
+        });
+        
+        // Close modal on overlay click
+        document.getElementById('projectModal').addEventListener('click', (e) => {
+            if (e.target.id === 'projectModal') {
+                closeModal();
+            }
+        });
+        
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+        
+        // Project filtering
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const filter = button.getAttribute('data-filter');
+                
+                // Update active button
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // Filter projects
+                projectCards.forEach(card => {
+                    const tags = card.getAttribute('data-tags');
+                    
+                    if (filter === 'all') {
+                        card.classList.remove('hidden');
+                    } else {
+                        if (tags.includes(filter)) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+        
         // Scroll progress indicator
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
