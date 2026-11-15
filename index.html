@@ -655,10 +655,10 @@
         .modal-header img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* cover */
         }
         
-        .modal-close {
+        /* .modal-close {
             position: absolute;
             top: 1.5rem;
             right: 1.5rem;
@@ -680,8 +680,52 @@
             background: var(--accent-cyan);
             color: var(--bg-primary);
             transform: rotate(90deg);
-        }
+        } */
         
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            background: rgba(10, 14, 23, 0.8);
+            border: 2px solid var(--accent-cyan);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Draw the cross */
+        .modal-close::before,
+        .modal-close::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 2px;
+            background: currentColor;
+            border-radius: 2px;
+            top: 50%;
+            left: 50%;
+        }
+
+        .modal-close::before {
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        .modal-close::after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+        /* Hover effect */
+        .modal-close:hover {
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+        }
+
         .modal-body {
             padding: 2.5rem;
         }
@@ -1075,6 +1119,118 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--accent-blue);
         }
+
+        /* Card container */
+        .exp-card {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(0, 245, 255, 0.15);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .exp-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.15);
+        }
+
+        /* Header */
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .exp-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .exp-logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.9);
+            padding: 6px;
+        }
+
+        /* Text */
+        .exp-role {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .exp-company {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .exp-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+        }
+
+        /* Metrics */
+        .exp-metrics {
+            display: flex;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-cyan);
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        /* Bullet points */
+        .exp-points {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .exp-points li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.6rem;
+            color: var(--text-secondary);
+        }
+
+        .exp-points li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent-cyan);
+        }
+
+        /* Tags */
+        .exp-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .exp-tags span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 0.3rem 0.8rem;
+            background: rgba(0, 245, 255, 0.08);
+            color: var(--accent-cyan);
+            border-radius: 5px;
+            border: 1px solid rgba(0, 245, 255, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -1112,6 +1268,7 @@
             <div class="modal-header">
                 <img id="modalImage" src="" alt="Project Image">
                 <button class="modal-close" onclick="closeModal()"></button>
+                 
             </div>
             <div class="modal-body">
                 <h2 class="modal-title" id="modalTitle"></h2>
@@ -1167,20 +1324,18 @@
                     <div class="timeline-item fade-in">
                         <div class="timeline-content">
                             <div class="timeline-header">
-                                <div>
-                                    <div class="timeline-company">Walmart Inc</div>
-                                    <div class="timeline-role">Manager, Automation Engineer - Robotics</div>
-                                    <div class="timeline-location">Bentonville, AR</div>
+                                <div class="exp-left">
+                                    <img src="images/walmart_logo.svg" class="exp-logo" alt="Walmart">
+                                    <div>
+                                        <div class="timeline-company">Walmart Inc</div>
+                                        <div class="timeline-role">Manager, Automation Engineer - Robotics</div>
+                                        <div class="timeline-location">Bentonville, AR</div>
+                                    </div>
                                 </div>
                                 <div class="timeline-date">Jan 2024 – Present</div>
                             </div>
                             <ul class="timeline-achievements">
-                                <!-- <li>Spearheaded technical development of an industry-leading vision/perception system for case segmentation using GroundingDino & SAM2. Established the entire pipeline for post-processing, collision detection, and robot path planning. Achieved 98% accuracy and reduced inference latency from 19s → 4s</li>
-                                <li>Developed custom datasets, enabling model fine-tuning for accuracy gains and real-time performance, and a ROS2-based integration platform connecting vision, AMR control, PLC, and Fanuc robotic systems</li>
-                                <li>Led technical development of the industry-first robotic automated trailer swing door opening solution, projected to deliver $15.1M in savings, through robotic programming, state of the art vision system, and a custom End-of-Arm Tool (EOAT)</li>
-                                <li>Designed a custom AMR platform with synchronous control of dual industrial arm for latch and handle manipulation based on direction from vision system</li>
-                                <li>Supported the creation of an internally designed robotic automated trailer unload system, with potential savings of $1.9B, by evolving the system from prototype to proof-of-concept (PoC). Achieved 85% case entitlement at 850 cases/hour peak throughput</li> -->
-
+                                
                                 <li>Led development of advanced robotic vision and automation systems delivering 98% perception accuracy and 5× performance improvement, enabling real-time autonomous warehouse operations</li>
                                 <li>Architected end-to-end robotics platforms integrating vision AI, AMRs, industrial robots, and controls systems to enable scalable deployment</li>
                                 <li>Delivered an industry-first robotic trailer door automation solution projected to generate $15M+ operational savings</li>
@@ -1193,10 +1348,13 @@
                     <div class="timeline-item fade-in">
                         <div class="timeline-content">
                             <div class="timeline-header">
-                                <div>
-                                    <div class="timeline-company">Robomechanics Lab, Carnegie Mellon University</div>
-                                    <div class="timeline-role">Research Assistant</div>
-                                    <div class="timeline-location">Pittsburgh, PA</div>
+                                <div class="exp-left">
+                                    <img src="images/cmu_logo.jpg" class="exp-logo" alt="CMU">
+                                    <div>
+                                        <div class="timeline-company">Robomechanics Lab, Carnegie Mellon University</div>
+                                        <div class="timeline-role">Research Assistant</div>
+                                        <div class="timeline-location">Pittsburgh, PA</div>
+                                    </div>
                                 </div>
                                 <div class="timeline-date">Aug 2022 – Dec 2023</div>
                             </div>
@@ -1211,10 +1369,13 @@
                     <div class="timeline-item fade-in">
                         <div class="timeline-content">
                             <div class="timeline-header">
-                                <div>
-                                    <div class="timeline-company">Airbus India</div>
-                                    <div class="timeline-role">Intern - Industrial Systemt</div>
-                                    <div class="timeline-location">Bangalore, India</div>
+                                <div class="exp-left">
+                                    <img src="images/airbus_logo.svg" class="exp-logo" alt="Airbus">
+                                    <div>
+                                        <div class="timeline-company">Airbus India</div>
+                                        <div class="timeline-role">Intern - Industrial Systemt</div>
+                                        <div class="timeline-location">Bangalore, India</div>
+                                    </div>
                                 </div>
                                 <div class="timeline-date">Mar 2022 – Jul 2023</div>
                             </div>
@@ -1229,7 +1390,8 @@
                 </div>
             </div>
         </section>
-        
+
+        </section>
         <!-- Projects Section -->
         <section id="projects">
             <div class="container">
@@ -1254,10 +1416,46 @@
                 </div>
                 
                 <div class="projects-grid" id="projectsGrid">
-                    <!-- Project 1: Visual Word Sense Disambiguation -->
+                    <!-- Project 1: Quadruped Research -->
+                    <div class="project-card fade-in" data-tags="ROS,Robotics,Controls,PyBullet,MPC,Simulation,Mechanical" data-project="quadruped">
+                        <!-- <img src="images/quadruped-research.jpg" alt="Quadruped Robot" class="project-image"> -->
+                        <div class="project-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 70 70" enable-background="new 0 0 64 64" xml:space="preserve"><g><g>
+                                <path d="M63.364,12.154C62.792,11.421,61.93,11,61,11H36.78l-0.325-1.302C36.078,8.186,34.56,7,33,7h-4    c-1.56,0-3.078,1.186-3.455,2.698L25.22,11H12c-0.801,0-1.555,0.313-2.121,0.879l-4,4C5.313,16.445,5,17.199,5,18v4    
+                                c0,0.948,0.444,1.8,1.146,2.35l-5.185,6.048c-0.693,0.81-1.031,1.843-0.949,2.909s0.573,2.036,1.384,2.73    c0.486,0.416,1.065,0.694,1.679,0.841c0.614,3.846,5.189,6.757,10.021,9.826c1.323,0.841,2.668,1.694,3.944,2.577    
+                                c0.017,0.057,0.038,0.111,0.065,0.166c0.46,0.919-0.811,2.839-1.813,3.847c-0.303,0.305-0.379,0.77-0.187,1.153    C15.157,54.552,16.412,57,19,57c2.206,0,4-1.794,4-4v-1c0-0.266-0.105-0.52-0.293-0.707c-2.337-2.337-5.49-4.34-8.539-6.277    
+                                c-4.306-2.735-8.381-5.332-9.059-8.192c0.739-0.215,1.415-0.623,1.927-1.221L16.125,25h24.464l-4.627,5.397    c-0.693,0.81-1.031,1.843-0.949,2.909s0.573,2.036,1.384,2.73c0.486,0.416,1.065,0.694,1.679,0.841    
+                                c0.614,3.846,5.189,6.757,10.021,9.826c1.323,0.841,2.668,1.694,3.944,2.577c0.017,0.057,0.038,0.111,0.065,0.166    c0.46,0.919-0.811,2.839-1.813,3.847c-0.303,0.305-0.379,0.77-0.187,1.153C50.157,54.552,51.412,57,54,57c2.206,0,4-1.794,4-4v-1    
+                                c0-0.266-0.105-0.52-0.293-0.707c-2.337-2.337-5.49-4.34-8.539-6.277c-4.306-2.735-8.381-5.332-9.059-8.192    c0.739-0.215,1.415-0.623,1.927-1.221L51.125,25H59c1.379,0,2.576-0.935,2.91-2.272l2-8    
+                                C64.136,13.826,63.938,12.888,63.364,12.154z M19.097,50.786c0.68,0.531,1.319,1.075,1.903,1.635V53c0,1.103-0.897,2-2,2    c-0.791,0-1.379-0.499-1.729-0.911C17.883,53.363,18.789,52.115,19.097,50.786z M54.097,50.786    
+                                c0.68,0.531,1.319,1.075,1.903,1.635V53c0,1.103-0.897,2-2,2c-0.791,0-1.379-0.499-1.729-0.911    C52.883,53.363,53.789,52.115,54.097,50.786z M27.484,10.183C27.64,9.563,28.361,9,29,9h4c0.639,0,1.36,0.563,1.516,1.183    
+                                L34.72,11H27.28L27.484,10.183z M7,22v-3h3.732L7.46,22.818C7.186,22.64,7,22.344,7,22z M5.519,34.301    c-0.691,0.807-2.012,0.911-2.821,0.217c-0.404-0.346-0.649-0.83-0.69-1.364c-0.041-0.533,0.128-1.05,0.474-1.455l12.002-14    
+                                C14.862,17.255,15.416,17,16.001,17c0.477,0,0.939,0.171,1.302,0.482c0.404,0.347,0.65,0.831,0.691,1.364    c0.041,0.532-0.128,1.049-0.475,1.455L5.519,34.301z M17.84,23l1.198-1.397c0.627-0.733,0.944-1.648,0.944-2.603H24v1    
+                                c0,0.553,0.447,1,1,1h12c0.553,0,1-0.447,1-1v-1h7.732l-3.429,4H17.84z M32,17v2h-2v-2H32z M36,17v2h-2v-2H36z M28,19h-2v-2h2V19z     M40.519,34.301c-0.69,0.807-2.012,0.911-2.821,0.217c-0.404-0.346-0.649-0.83-0.69-1.364c-0.041-0.533,0.128-1.05,0.474-1.455    
+                                l12.002-14C49.862,17.255,50.416,17,51.001,17c0.477,0,0.939,0.171,1.302,0.482c0.404,0.347,0.65,0.831,0.691,1.364    c0.041,0.532-0.128,1.049-0.475,1.455L40.519,34.301z M61.971,14.243l-2,7.999C59.858,22.688,59.46,23,59,23h-6.16l1.198-1.397    
+                                c0.694-0.813,1.032-1.846,0.95-2.91c-0.082-1.065-0.574-2.034-1.384-2.729C52.88,15.342,51.955,15,51.001,15    c-1.17,0-2.277,0.51-3.037,1.397L47.447,17H38v-1c0-0.553-0.447-1-1-1H25c-0.553,0-1,0.447-1,1v1h-4.552    
+                                c-0.223-0.384-0.497-0.739-0.844-1.036C17.88,15.342,16.955,15,16.001,15c-1.17,0-2.277,0.51-3.037,1.397L12.447,17H7.586    
+                                l3.707-3.707C11.479,13.106,11.737,13,12,13h49c0.31,0,0.597,0.141,0.788,0.385C61.979,13.63,62.046,13.942,61.971,14.243z"/></g></g></svg>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Quadruped with Spine Optimization</h3>
+                            <p class="project-description">
+                                Computational design optimization using PyBullet with hierarchical Model Predictive Control for quadruped locomotion.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">ROS</span>
+                                <span class="tech-tag">Robotics</span>
+                                <span class="tech-tag">Controls</span>
+                                <span class="tech-tag">PyBullet</span>
+                                <span class="tech-tag">MPC</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 2: Visual Word Sense Disambiguation -->
                     <div class="project-card fade-in" data-tags="MetaClip,Computer Vision,PyTorch,NLP" data-project="vwsd">
                         <!-- Replace with your project image -->
-                        <!-- <img src="images/vwsd-project.jpg" alt="Visual Word Sense Disambiguation" class="project-image"> -->
+                        <!-- <img src="images/vwsd.png" alt="Visual Word Sense Disambiguation" class="project-image"> -->
                         <div class="project-icon">
                             <!-- <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="3" y="3" width="7" height="7"></rect>
@@ -1283,7 +1481,7 @@
                         </div>
                     </div>
                     
-                    <!-- Project 2: ASR -->
+                    <!-- Project 3: ASR -->
                     <div class="project-card fade-in" data-tags="Deep Learning,TTS,ASR,PyTorch" data-project="asr">
                         <!-- <img src="images/asr-project.jpg" alt="Speech Recognition" class="project-image"> -->
                         <div class="project-icon">
@@ -1307,7 +1505,7 @@
                         </div>
                     </div>
                     
-                    <!-- Project 3: Deep Learning Portfolio -->
+                    <!-- Project 4: Deep Learning Portfolio -->
                     <div class="project-card fade-in" data-tags="Deep Learning,CNN,LSTM,Attention,PyTorch" data-project="dl-portfolio">
                         <!-- <img src="images/dl-portfolio.jpg" alt="Deep Learning Projects" class="project-image"> -->
                         <div class="project-icon">
@@ -1377,7 +1575,7 @@
                         </div>
                     </div>
                     
-                    <!-- Project 4: Construction Hazard Detection -->
+                    <!-- Project 5: Construction Hazard Detection -->
                     <div class="project-card fade-in" data-tags="YoloV7,Computer Vision,Object Detection,Safety" data-project="construction">
                         <!-- <img src="images/construction.png" alt="Construction Hazard Detection" class="project-image"> -->
                         <div class="project-icon">
@@ -1408,42 +1606,6 @@
                                 <span class="tech-tag">Computer Vision</span>
                                 <span class="tech-tag">Object Detection</span>
                                 <span class="tech-tag">Safety</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Project 5: Quadruped Research -->
-                    <div class="project-card fade-in" data-tags="ROS,Robotics,Controls,PyBullet,MPC,Simulation,Mechanical" data-project="quadruped">
-                        <!-- <img src="images/quadruped-research.jpg" alt="Quadruped Robot" class="project-image"> -->
-                        <div class="project-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 70 70" enable-background="new 0 0 64 64" xml:space="preserve"><g><g>
-                                <path d="M63.364,12.154C62.792,11.421,61.93,11,61,11H36.78l-0.325-1.302C36.078,8.186,34.56,7,33,7h-4    c-1.56,0-3.078,1.186-3.455,2.698L25.22,11H12c-0.801,0-1.555,0.313-2.121,0.879l-4,4C5.313,16.445,5,17.199,5,18v4    
-                                c0,0.948,0.444,1.8,1.146,2.35l-5.185,6.048c-0.693,0.81-1.031,1.843-0.949,2.909s0.573,2.036,1.384,2.73    c0.486,0.416,1.065,0.694,1.679,0.841c0.614,3.846,5.189,6.757,10.021,9.826c1.323,0.841,2.668,1.694,3.944,2.577    
-                                c0.017,0.057,0.038,0.111,0.065,0.166c0.46,0.919-0.811,2.839-1.813,3.847c-0.303,0.305-0.379,0.77-0.187,1.153    C15.157,54.552,16.412,57,19,57c2.206,0,4-1.794,4-4v-1c0-0.266-0.105-0.52-0.293-0.707c-2.337-2.337-5.49-4.34-8.539-6.277    
-                                c-4.306-2.735-8.381-5.332-9.059-8.192c0.739-0.215,1.415-0.623,1.927-1.221L16.125,25h24.464l-4.627,5.397    c-0.693,0.81-1.031,1.843-0.949,2.909s0.573,2.036,1.384,2.73c0.486,0.416,1.065,0.694,1.679,0.841    
-                                c0.614,3.846,5.189,6.757,10.021,9.826c1.323,0.841,2.668,1.694,3.944,2.577c0.017,0.057,0.038,0.111,0.065,0.166    c0.46,0.919-0.811,2.839-1.813,3.847c-0.303,0.305-0.379,0.77-0.187,1.153C50.157,54.552,51.412,57,54,57c2.206,0,4-1.794,4-4v-1    
-                                c0-0.266-0.105-0.52-0.293-0.707c-2.337-2.337-5.49-4.34-8.539-6.277c-4.306-2.735-8.381-5.332-9.059-8.192    c0.739-0.215,1.415-0.623,1.927-1.221L51.125,25H59c1.379,0,2.576-0.935,2.91-2.272l2-8    
-                                C64.136,13.826,63.938,12.888,63.364,12.154z M19.097,50.786c0.68,0.531,1.319,1.075,1.903,1.635V53c0,1.103-0.897,2-2,2    c-0.791,0-1.379-0.499-1.729-0.911C17.883,53.363,18.789,52.115,19.097,50.786z M54.097,50.786    
-                                c0.68,0.531,1.319,1.075,1.903,1.635V53c0,1.103-0.897,2-2,2c-0.791,0-1.379-0.499-1.729-0.911    C52.883,53.363,53.789,52.115,54.097,50.786z M27.484,10.183C27.64,9.563,28.361,9,29,9h4c0.639,0,1.36,0.563,1.516,1.183    
-                                L34.72,11H27.28L27.484,10.183z M7,22v-3h3.732L7.46,22.818C7.186,22.64,7,22.344,7,22z M5.519,34.301    c-0.691,0.807-2.012,0.911-2.821,0.217c-0.404-0.346-0.649-0.83-0.69-1.364c-0.041-0.533,0.128-1.05,0.474-1.455l12.002-14    
-                                C14.862,17.255,15.416,17,16.001,17c0.477,0,0.939,0.171,1.302,0.482c0.404,0.347,0.65,0.831,0.691,1.364    c0.041,0.532-0.128,1.049-0.475,1.455L5.519,34.301z M17.84,23l1.198-1.397c0.627-0.733,0.944-1.648,0.944-2.603H24v1    
-                                c0,0.553,0.447,1,1,1h12c0.553,0,1-0.447,1-1v-1h7.732l-3.429,4H17.84z M32,17v2h-2v-2H32z M36,17v2h-2v-2H36z M28,19h-2v-2h2V19z     M40.519,34.301c-0.69,0.807-2.012,0.911-2.821,0.217c-0.404-0.346-0.649-0.83-0.69-1.364c-0.041-0.533,0.128-1.05,0.474-1.455    
-                                l12.002-14C49.862,17.255,50.416,17,51.001,17c0.477,0,0.939,0.171,1.302,0.482c0.404,0.347,0.65,0.831,0.691,1.364    c0.041,0.532-0.128,1.049-0.475,1.455L40.519,34.301z M61.971,14.243l-2,7.999C59.858,22.688,59.46,23,59,23h-6.16l1.198-1.397    
-                                c0.694-0.813,1.032-1.846,0.95-2.91c-0.082-1.065-0.574-2.034-1.384-2.729C52.88,15.342,51.955,15,51.001,15    c-1.17,0-2.277,0.51-3.037,1.397L47.447,17H38v-1c0-0.553-0.447-1-1-1H25c-0.553,0-1,0.447-1,1v1h-4.552    
-                                c-0.223-0.384-0.497-0.739-0.844-1.036C17.88,15.342,16.955,15,16.001,15c-1.17,0-2.277,0.51-3.037,1.397L12.447,17H7.586    
-                                l3.707-3.707C11.479,13.106,11.737,13,12,13h49c0.31,0,0.597,0.141,0.788,0.385C61.979,13.63,62.046,13.942,61.971,14.243z"/></g></g></svg>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Quadruped with Spine Optimization</h3>
-                            <p class="project-description">
-                                Computational design optimization using PyBullet with hierarchical Model Predictive Control for quadruped locomotion.
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">ROS</span>
-                                <span class="tech-tag">Robotics</span>
-                                <span class="tech-tag">Controls</span>
-                                <span class="tech-tag">PyBullet</span>
-                                <span class="tech-tag">MPC</span>
                             </div>
                         </div>
                     </div>
@@ -1972,7 +2134,7 @@
         const projectData = {
             'vwsd': {
                 title: 'Visual-Word Sense Disambiguation',
-                image: 'images/vwsd-project.jpg',
+                image: 'images/vwsd.png',
                 tech: ['MetaClip', 'Computer Vision', 'PyTorch', 'NLP'],
                 description: 'Developed a state-of-the-art Visual Word Sense Disambiguation system using the MetaClip model, evaluated against Weighted Average Loss metrics. The system significantly improved upon baseline performance across multiple key metrics.',
                 keyFeatures: [
@@ -1994,15 +2156,15 @@
                     'Successfully disambiguated complex multi-sense words',
                     'Demonstrated robust performance across diverse contexts'
                 ],
-                gallery: ['images/vwsd-results-1.jpg', 'images/vwsd-results-2.jpg'],
+                gallery: ['images/baseline-literal_text.png', 'images/baseline-semantic.png'],
                 links: [
-                    { text: 'GitHub Repository', url: 'https://github.com/NikhilCG26' },
-                    { text: 'Project Report', url: '#' }
+                    { text: 'GitHub Repository', url: 'https://github.com/NikhilCG26/Visual_Word_Sense_Disambiguation' },
+                    { text: 'Project Report', url: 'papers/ANLP_Final_Report.pdf' }
                 ]
             },
             'asr': {
                 title: 'Automatic Speech Recognition using Synthetic Speech',
-                image: 'images/asr-project.jpg',
+                image: 'images/VITS.png',
                 tech: ['Deep Learning', 'TTS', 'ASR', 'PyTorch'],
                 description: 'Created a state-of-the-art speech recognition system using Attention-based Deep Neural Network models trained exclusively on synthetic audio data generated through Variational Inference with adversarial learning Text-to-Speech models.',
                 keyFeatures: [
@@ -2023,15 +2185,15 @@
                     'Successfully trained robust ASR using 100% synthetic data',
                     'Demonstrated transferability to real speech recognition tasks'
                 ],
-                gallery: ['images/asr-arch.jpg', 'images/asr-results.jpg'],
+                gallery: ['images/ASR-LD.jpeg', 'images/ASR-Loss.jpeg'],
                 links: [
-                    { text: 'GitHub Repository', url: 'https://github.com/NikhilCG26' },
-                    { text: 'Technical Paper', url: '#' }
+                    { text: 'GitHub Repository', url: 'https://github.com/NikhilCG26/Automatic-Speech-Recognition-with-Synthetic-Speech' },
+                    { text: 'Technical Paper', url: 'papers/IDL ASR - Final Report.pdf' }
                 ]
             },
             'dl-portfolio': {
                 title: 'Deep Learning Portfolio',
-                image: 'images/dl-portfolio.jpg',
+                image: 'images/deep_learning.avif',
                 tech: ['Deep Learning', 'CNN', 'LSTM', 'Attention', 'PyTorch'],
                 description: 'Comprehensive collection of deep learning projects spanning computer vision, speech recognition, and natural language processing, showcasing expertise in various neural network architectures and applications.',
                 keyFeatures: [
@@ -2162,27 +2324,32 @@
                 title: 'Multi-Vehicle Racing Line Optimization',
                 image: 'images/quadruped-research.jpg',
                 tech: ['ROS', 'Robotics', 'PyBullet', 'MPC', 'Optimization'],
-                description: 'Research project on computational design optimization of a quadruped robot with a flexible spine, using PyBullet simulation and hierarchical Model Predictive Control for improved locomotion performance. Conducted in collaboration with Google DeepMind.',
+                description: 'Developed a multi-vehicle trajectory optimization framework for autonomous racing, focused on enabling two vehicles to compete for the optimal racing line while maintaining collision avoidance. Formulated the problem using vehicle dynamics, state and control constraints, and nonlinear optimization with IPOPT and Direct Collocation (DIRCOL). Implemented and evaluated kinematic and dynamic bicycle models, with simulations demonstrating trajectory tracking and collision avoidance on straight and sinusoidal paths.',
                 keyFeatures: [
-                    'Computational design optimization for spine parameters',
-                    'Hierarchical Model Predictive Control (MPC) framework',
-                    'Physics-based simulation in PyBullet',
-                    'Joint command generation for coordinated locomotion',
-                    'Integration with ROS for control and visualization'
+                    'Multi-vehicle racing line optimization for two autonomous vehicles competing for track position',
+                    'Collision avoidance constraints to maintain safe separation between vehicles',
+                    'Kinematic and dynamic bicycle models for vehicle motion representation',
+                    'Nonlinear trajectory optimization using IPOPT and Direct Collocation',
+                    'Hermite-Simpson integration for enforcing vehicle dynamics between collocation points',
+                    'Simulation of vehicle trajectories, velocities, and control inputs using Meshcat',
                 ],
                 technicalDetails: [
-                    'Spine design parameters: stiffness, damping, joint limits',
-                    'Two-level MPC: high-level trajectory planning, low-level control',
-                    'Optimization: CMA-ES for design, QP for control',
-                    'Simulation: 1kHz control loop, contact dynamics modeling',
-                    'ROS integration: tf2, joint_state_publisher, rviz visualization'
+                    'Optimization: IPOPT nonlinear optimizer with Direct Collocation (DIRCOL)',
+                    'Numerical Integration: Implicit Hermite-Simpson integration',
+                    'Vehicle Models: Kinematic and dynamic bicycle models',
+                    'State Variables: Vehicle position (x, y), heading angle, steering angle, and velocity',
+                    'Control Inputs: Acceleration and steering angle rate for the dynamic model',
+                    'Collision Avoidance: Minimum inter-vehicle distance constraints using circular vehicle approximations',
+                    'Trajectory Tracking: Quadratic cost function penalizing deviations from reference trajectories and control effort',
+                    'Simulation: Two-vehicle passing scenarios and combined vehicle simulations on straight and sinusoidal reference paths, visualized using Meshcat'     
                 ],
                 results: [
-                    '25% improvement in locomotion speed with optimized spine',
-                    '40% reduction in energy consumption during gait',
-                    'Robust performance across various terrains',
-                    'Successful sim-to-real transfer on prototype hardware',
-                    'Published at Dynamic Walking Conference 2024'
+                    'Successfully simulated two autonomous vehicles following optimized trajectories while maintaining collision avoidance',
+                    'Demonstrated safe passing behavior with the kinematic and dynamic bicycle models in preliminary simulations',
+                    'Implemented acceleration and velocity constraints to produce more realistic vehicle behavior using the dynamic model',
+                    'Combined an optimized ego vehicle with a closed-loop controlled second vehicle to investigate multi-vehicle racing interactions',
+                    'Validated trajectory following and collision avoidance on straight and sinusoidal reference paths',
+                    'Identified limitations in competitive position-battling behavior, establishing future directions for more realistic vehicle dynamics and complex racing tracks'
                 ],
                 gallery: ['images/quadruped-sim.jpg', 'images/quadruped-spine.jpg', 'images/quadruped-gait.jpg'],
                 links: [
@@ -2225,7 +2392,7 @@
                 ]
             },
             'nitinol': {
-                title: 'Path Planning and Control Strategies for an Autonomous Buggy',
+                title: 'Nitinol Actuator for Satellite Solar Panel Deployment',
                 image: 'images/quadruped-research.jpg',
                 tech: ['ROS', 'Robotics', 'PyBullet', 'MPC', 'Optimization'],
                 description: 'Research project on computational design optimization of a quadruped robot with a flexible spine, using PyBullet simulation and hierarchical Model Predictive Control for improved locomotion performance. Conducted in collaboration with Google DeepMind.',
