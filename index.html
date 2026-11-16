@@ -1453,7 +1453,7 @@
                     </div>
                     
                     <!-- Project 2: Visual Word Sense Disambiguation -->
-                    <div class="project-card fade-in" data-tags="MetaClip,Computer Vision,PyTorch,NLP" data-project="vwsd">
+                    <div class="project-card fade-in" data-tags="MetaClip,Computer Vision,PyTorch,NLP,Deep Learning" data-project="vwsd">
                         <!-- Replace with your project image -->
                         <!-- <img src="images/vwsd.png" alt="Visual Word Sense Disambiguation" class="project-image"> -->
                         <div class="project-icon">
@@ -1482,7 +1482,7 @@
                     </div>
                     
                     <!-- Project 3: ASR -->
-                    <div class="project-card fade-in" data-tags="Deep Learning,TTS,ASR,PyTorch" data-project="asr">
+                    <div class="project-card fade-in" data-tags="Deep Learning,TTS,ASR,PyTorch,NLP" data-project="asr">
                         <!-- <img src="images/asr-project.jpg" alt="Speech Recognition" class="project-image"> -->
                         <div class="project-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -2314,16 +2314,16 @@
                     'Team leadership: Coordinated 8-member mechanical team',
                     'Project completed on time and within budget'
                 ],
-                gallery: ['images/rover-cad.jpg', 'images/rover-assembly.jpg', 'images/rover-team.jpg'],
+                gallery: ['images/Bogie.png', 'images/ansys.png', 'images/OrthographicRover.png'],
                 links: [
-                    { text: 'Team Website', url: '#' },
-                    { text: 'Competition Video', url: '#' }
+                    { text: 'GitHub Repository', url: 'https://github.com/NikhilCG26/Mars-Rover' },
+                    { text: 'Competition Video', url: 'images/Perpet.mp4' }
                 ]
             },
             'racing': {
                 title: 'Multi-Vehicle Racing Line Optimization',
                 image: 'images/quadruped-research.jpg',
-                tech: ['ROS', 'Robotics', 'PyBullet', 'MPC', 'Optimization'],
+                tech: ['Robotics', 'PyBullet', 'MPC', 'Optimization', 'Collision Detection', 'Trajectory Planning'],
                 description: 'Developed a multi-vehicle trajectory optimization framework for autonomous racing, focused on enabling two vehicles to compete for the optimal racing line while maintaining collision avoidance. Formulated the problem using vehicle dynamics, state and control constraints, and nonlinear optimization with IPOPT and Direct Collocation (DIRCOL). Implemented and evaluated kinematic and dynamic bicycle models, with simulations demonstrating trajectory tracking and collision avoidance on straight and sinusoidal paths.',
                 keyFeatures: [
                     'Multi-vehicle racing line optimization for two autonomous vehicles competing for track position',
@@ -2361,28 +2361,29 @@
             'buggy': {
                 title: 'Path Planning and Control Strategies for an Autonomous Buggy',
                 image: 'images/quadruped-research.jpg',
-                tech: ['ROS', 'Robotics', 'PyBullet', 'MPC', 'Optimization'],
-                description: 'Research project on computational design optimization of a quadruped robot with a flexible spine, using PyBullet simulation and hierarchical Model Predictive Control for improved locomotion performance. Conducted in collaboration with Google DeepMind.',
+                tech: ['Model Predictive Control', 'Robotics', 'Webots', 'MPC', 'Optimization'],
+                description: 'Developed a series of autonomous vehicle controllers for Webots, progressing from PID tracking and full-state feedback to LQR, an MPC-style controller, and EKF-SLAM-assisted control. The controllers follow a predefined racing trajectory using vehicle position, heading, and velocity, with steering and throttle commands calculated in simulation.',
                 keyFeatures: [
-                    'Computational design optimization for spine parameters',
-                    'Hierarchical Model Predictive Control (MPC) framework',
-                    'Physics-based simulation in PyBullet',
-                    'Joint command generation for coordinated locomotion',
-                    'Integration with ROS for control and visualization'
+                    'Four-stage controller progression across Projects 1–4',
+                    'PID-based longitudinal speed control and waypoint-based path tracking',
+                    'Full-state feedback, LQR, and MPC-style lateral control methods',
+                    'Four-state lateral vehicle model using cross-track and heading errors',
+                    'EKF-SLAM pose estimation with range and relative-bearing measurements',
+                    'Webots simulation worlds, trajectory data, and controller performance plots'
                 ],
                 technicalDetails: [
-                    'Spine design parameters: stiffness, damping, joint limits',
-                    'Two-level MPC: high-level trajectory planning, low-level control',
-                    'Optimization: CMA-ES for design, QP for control',
-                    'Simulation: 1kHz control loop, contact dynamics modeling',
-                    'ROS integration: tf2, joint_state_publisher, rviz visualization'
+                    'Simulation: Webots automotive environment',
+                    'Vehicle model: Bicycle-model lateral dynamics, linearized around forward speed',
+                    'Lateral control: Fixed-gain state feedback in Project 2; discrete LQR and finite-horizon Riccati-style recursion in Project 3',
+                    'State estimation: EKF-SLAM in Project 4, estimating vehicle pose and fixed map feature locations',
+                    'Longitudinal control: PID speed tracking, with waypoint-dependent target speeds in Projects 3 and 4',
+                    'Software: Python, NumPy, SciPy, Matplotlib, and Webots’ vehicle controller API'
                 ],
                 results: [
-                    '25% improvement in locomotion speed with optimized spine',
-                    '40% reduction in energy consumption during gait',
-                    'Robust performance across various terrains',
-                    'Successful sim-to-real transfer on prototype hardware',
-                    'Published at Dynamic Walking Conference 2024'
+                    'The Project 3 results record successful loop completion for both LQR and MPC at Q = diag(0.01, 1, 0.01, 1) and R = 700.',
+                    'The recorded time was 104.256 s, with 4.3195 m maximum and 1.013 m average nearest-waypoint distance.',
+                    'The project demonstrates a progression from basic path tracking to model-based control and state estimation in simulation.',
+                    'Project 4’s range and bearing measurements are generated from the known map and simulated ground-truth pose; this implementation does not connect to physical sensors.'
                 ],
                 gallery: ['images/quadruped-sim.jpg', 'images/quadruped-spine.jpg', 'images/quadruped-gait.jpg'],
                 links: [
@@ -2395,27 +2396,26 @@
                 title: 'Nitinol Actuator for Satellite Solar Panel Deployment',
                 image: 'images/quadruped-research.jpg',
                 tech: ['ROS', 'Robotics', 'PyBullet', 'MPC', 'Optimization'],
-                description: 'Research project on computational design optimization of a quadruped robot with a flexible spine, using PyBullet simulation and hierarchical Model Predictive Control for improved locomotion performance. Conducted in collaboration with Google DeepMind.',
+                description: 'Designed and built a laboratory prototype exploring how a Nitinol shape memory alloy wire could deploy a CubeSat solar panel. The project combined a CubeSat frame, a hinged panel, a trained Nitinol wire actuator, and an Arduino-controlled relay circuit. The prototype successfully extended one panel.',
                 keyFeatures: [
-                    'Computational design optimization for spine parameters',
-                    'Hierarchical Model Predictive Control (MPC) framework',
-                    'Physics-based simulation in PyBullet',
-                    'Joint command generation for coordinated locomotion',
-                    'Integration with ROS for control and visualization'
+                    'Nitinol wire actuator for solar panel deployment',
+                    'CubeSat-inspired frame and hinged panel prototype',
+                    'Arduino Uno and relay circuit to control current to the actuator',
+                    'CAD model and circuit schematic developed during the design process',
+                    'Comparison of the actuator’s reported voltage and power requirements with servo and hydraulic alternatives'
                 ],
                 technicalDetails: [
-                    'Spine design parameters: stiffness, damping, joint limits',
-                    'Two-level MPC: high-level trajectory planning, low-level control',
-                    'Optimization: CMA-ES for design, QP for control',
-                    'Simulation: 1kHz control loop, contact dynamics modeling',
-                    'ROS integration: tf2, joint_state_publisher, rviz visualization'
+                    'Actuator: 0.5 mm diameter, 1:1 nickel-titanium Nitinol wire',
+                    'Control: Arduino Uno with a relay switching the actuator’s external power supply',
+                    'Design tools: SOLIDWORKS for the CAD model, TinkerCAD for circuit layout, and Arduino IDE for programming',
+                    'Prototype: Wooden frame with a cardboard solar panel and a hinged, single-panel mechanism',
+                    'Operating principle: Current heats the wire, activating its shape memory effect to extend the panel'
                 ],
                 results: [
-                    '25% improvement in locomotion speed with optimized spine',
-                    '40% reduction in energy consumption during gait',
-                    'Robust performance across various terrains',
-                    'Successful sim-to-real transfer on prototype hardware',
-                    'Published at Dynamic Walking Conference 2024'
+                    'Built and demonstrated extension of a single solar panel using the Nitinol actuator.',
+                    'Compared reported voltage and power figures for Nitinol, servo, and hydraulic actuation.',
+                    'The prototype demonstrated panel extension only. Panel retraction and actuation of multiple panels were identified as future work.',
+                    'The report gives different voltage figures for the actuator setup and its comparison chart, so this popup avoids presenting one as a verified operating value.'
                 ],
                 gallery: ['images/quadruped-sim.jpg', 'images/quadruped-spine.jpg', 'images/quadruped-gait.jpg'],
                 links: [
